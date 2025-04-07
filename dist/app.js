@@ -149,6 +149,20 @@ async function safeNetworkRequest(url, options = {}) {
     return fetch(url, options);
 }
 
+// 辅助函数：构建位置查询参数
+function _buildLocationQuery(locationParam) {
+    if (typeof locationParam === 'string') {
+        return `location=${locationParam}`;
+    } else if (locationParam && locationParam.latitude && locationParam.longitude) {
+        return `location=${locationParam.longitude},${locationParam.latitude}`;
+    } else if (Array.isArray(locationParam) && locationParam.length >= 2) {
+        // 兼容经纬度作为单独参数传入的情况 (假设是 [latitude, longitude])
+        return `location=${locationParam[1]},${locationParam[0]}`;
+    }
+    console.warn('Invalid locationParam format:', locationParam);
+    return null; // 或者返回一个默认值/错误指示
+}
+
 // 初始化应用
 function initApp() {
     // 获取用户位置
@@ -279,18 +293,12 @@ async function getLocationName(latitude, longitude) {
 
 // 获取天气数据
 async function getWeatherData(locationParam) {
+    const locationQuery = _buildLocationQuery(locationParam);
+    if (!locationQuery) {
+        console.error('无法构建天气数据的位置查询');
+        return; 
+    }
     try {
-        // 检查参数类型，如果是字符串则直接使用，否则假定为经纬度坐标
-        let locationQuery;
-        if (typeof locationParam === 'string') {
-            locationQuery = `location=${locationParam}`;
-        } else if (locationParam.latitude && locationParam.longitude) {
-            locationQuery = `location=${locationParam.longitude},${locationParam.latitude}`;
-        } else {
-            // 经纬度作为单独参数传入的情况
-            locationQuery = `location=${locationParam[1]},${locationParam[0]}`;
-        }
-            
         const response = await safeNetworkRequest(`${config.weatherApiUrl}?${locationQuery}&key=${config.key}`);
         const data = await response.json();
         
@@ -306,18 +314,12 @@ async function getWeatherData(locationParam) {
 
 // 获取空气质量数据
 async function getAirQualityData(locationParam) {
+    const locationQuery = _buildLocationQuery(locationParam);
+    if (!locationQuery) {
+        console.error('无法构建空气质量数据的位置查询');
+        return; 
+    }
     try {
-        // 检查参数类型，如果是字符串则直接使用，否则假定为经纬度坐标
-        let locationQuery;
-        if (typeof locationParam === 'string') {
-            locationQuery = `location=${locationParam}`;
-        } else if (locationParam.latitude && locationParam.longitude) {
-            locationQuery = `location=${locationParam.longitude},${locationParam.latitude}`;
-        } else {
-            // 经纬度作为单独参数传入的情况
-            locationQuery = `location=${locationParam[1]},${locationParam[0]}`;
-        }
-            
         const response = await safeNetworkRequest(`${config.airQualityApiUrl}?${locationQuery}&key=${config.key}`);
         const data = await response.json();
         
@@ -333,18 +335,12 @@ async function getAirQualityData(locationParam) {
 
 // 获取逐小时天气预报数据
 async function getHourlyWeatherData(locationParam) {
+    const locationQuery = _buildLocationQuery(locationParam);
+    if (!locationQuery) {
+        console.error('无法构建逐小时天气数据的位置查询');
+        return; 
+    }
     try {
-        // 检查参数类型，如果是字符串则直接使用，否则假定为经纬度坐标
-        let locationQuery;
-        if (typeof locationParam === 'string') {
-            locationQuery = `location=${locationParam}`;
-        } else if (locationParam.latitude && locationParam.longitude) {
-            locationQuery = `location=${locationParam.longitude},${locationParam.latitude}`;
-        } else {
-            // 经纬度作为单独参数传入的情况
-            locationQuery = `location=${locationParam[1]},${locationParam[0]}`;
-        }
-            
         const response = await safeNetworkRequest(`${config.hourlyWeatherApiUrl}?${locationQuery}&key=${config.key}`);
         const data = await response.json();
         
