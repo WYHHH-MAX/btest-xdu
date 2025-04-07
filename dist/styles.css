@@ -271,6 +271,10 @@ h3 {
     font-weight: 600;
     color: var(--text-color);
     font-size: 1.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    white-space: nowrap;
 }
 
 /* 空气质量样式 */
@@ -382,7 +386,7 @@ h3 {
 
 .pollutant-item {
     background-color: white;
-    padding: 10px;
+    padding: 10px 6px;
     border-radius: 12px;
     text-align: center;
     transition: var(--transition);
@@ -406,27 +410,25 @@ h3 {
     font-weight: 600;
     font-size: 1.0rem;
     color: var(--primary-color);
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
     justify-content: center;
     align-items: baseline;
+    column-gap: 3px;
     white-space: nowrap;
 }
 
 /* Set minimum width for the number span */
 .value-num {
-    display: inline-block;
-    min-width: 30px;
-    text-align: center; /* Align numbers to the center again */
+    /* No specific styles needed for centering here anymore */
 }
 
 /* 小字单位样式 */
 .unit {
-    display: inline-block;
-    min-width: 45px;
-    text-align: left; /* Align units to the left (following centered number) */
     font-size: 0.8em;
     color: var(--text-secondary);
-    margin-left: 3px; /* Add space before unit again */
+    padding-left: 0;
     vertical-align: baseline;
 }
 

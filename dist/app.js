@@ -180,30 +180,43 @@ async function getUserLocation() {
     // 如果在Capacitor环境中运行，使用Capacitor Geolocation插件
     if (isCapacitorApp && Geolocation) {
         try {
-            elements.locationName.textContent = '获取位置中...';
-            
-            // 请求位置权限
-            const permissionStatus = await Geolocation.checkPermissions();
+            elements.locationName.textContent = '检查权限...'; // Initial status
+
+            // 1. Check permissions first
+            let permissionStatus = await Geolocation.checkPermissions();
+
+            // 2. If not granted, request permissions
             if (permissionStatus.location !== 'granted') {
-                // 如果没有权限，则请求权限
-                const requestResult = await Geolocation.requestPermissions();
-                if (requestResult.location !== 'granted') {
-                    throw new Error('位置权限被拒绝');
-                }
+                elements.locationName.textContent = '请求权限...'; // Status update
+                permissionStatus = await Geolocation.requestPermissions();
             }
-            
-            // 获取当前位置
-            const position = await Geolocation.getCurrentPosition({
-                enableHighAccuracy: true,
-                timeout: 10000
-            });
-            
-            const { latitude, longitude } = position.coords;
-            getLocationName(latitude, longitude);
+
+            // 3. Check the final permission status
+            if (permissionStatus.location === 'granted') {
+                elements.locationName.textContent = '获取位置中...'; // Status update
+                // 4. Only get position if permission is granted
+                const position = await Geolocation.getCurrentPosition({
+                    enableHighAccuracy: true,
+                    timeout: 10000
+                });
+                const { latitude, longitude } = position.coords;
+                // Proceed to get location name and weather data
+                getLocationName(latitude, longitude);
+            } else {
+                // Permission denied
+                throw new Error('位置权限被拒绝');
+            }
         } catch (error) {
-            console.error('获取位置失败:', error);
-            elements.locationName.textContent = '位置获取失败，请刷新重试';
-            // 使用默认位置（北京）
+            console.error('获取位置操作失败:', error); // More specific log
+            // Determine specific error message for UI
+            if (error && error.message && error.message.includes('被拒绝')) {
+                elements.locationName.textContent = '未授予位置权限';
+            } else if (error && error.message && error.message.includes('timeout')){
+                 elements.locationName.textContent = '获取位置超时';
+            } else {
+                elements.locationName.textContent = '无法获取位置';
+            }
+            // Fallback to default location
             getWeatherData(39.92, 116.41);
             getAirQualityData(39.92, 116.41);
             getHourlyWeatherData(39.92, 116.41);
