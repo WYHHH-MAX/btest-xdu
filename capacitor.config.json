@@ -24,5 +24,8 @@
       "android.permission.INTERNET",
       "android.permission.ACCESS_NETWORK_STATE"
     ]
+  },
+  "server": {
+    "androidScheme": "https"
   }
 }
