@@ -72,7 +72,7 @@ h1 {
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow);
     padding: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     transition: var(--transition);
     border: 1px solid rgba(255, 255, 255, 0.8);
     position: relative;
@@ -278,7 +278,7 @@ h3 {
     display: flex;
     align-items: stretch;
     margin-bottom: 30px;
-    gap: 24px;
+    gap: 16px;
     position: relative;
     z-index: 1;
 }
@@ -333,7 +333,7 @@ h3 {
 }
 
 .pollutant {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 12px 16px;
     border-radius: 12px;
@@ -346,25 +346,28 @@ h3 {
     margin-right: 8px;
 }
 
+/* Style for the concise health advice text */
+.health-advice-text {
+    font-size: 0.9rem; /* Slightly smaller font */
+    color: var(--text-secondary); /* Use secondary text color */
+    text-align: center; /* Center the text */
+    margin-top: 8px; /* Add some space above */
+    margin-bottom: 16px; /* Add space below before the grid */
+    padding: 8px 12px; /* Add some padding */
+    background-color: rgba(241, 245, 249, 0.6); /* Subtle background */
+    border-radius: 8px; /* Rounded corners */
+    display: block; /* Ensure it takes full width */
+}
+
 #primary-pollutant {
     font-weight: 600;
     color: var(--text-color);
 }
 
-.advice {
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.07) 0%, rgba(124, 58, 237, 0.07) 100%);
-    padding: 16px;
-    border-radius: 16px;
-    margin-bottom: 16px;
-    flex: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
-    border-left: 3px solid var(--secondary-color);
-}
-
 /* 污染物网格 */
 .pollutants-container {
     background: rgba(255, 255, 255, 0.5);
-    padding: 20px;
+    padding: 20px 12px; /* Match health advice padding */
     border-radius: 16px;
     position: relative;
     z-index: 1;
@@ -373,13 +376,13 @@ h3 {
 
 .pollutants-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
 }
 
 .pollutant-item {
     background-color: white;
-    padding: 14px;
+    padding: 10px;
     border-radius: 12px;
     text-align: center;
     transition: var(--transition);
@@ -393,26 +396,48 @@ h3 {
 }
 
 .pollutant-name {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     font-weight: 500;
 }
 
 .pollutant-value {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+/* Set minimum width for the number span */
+.value-num {
+    display: inline-block;
+    min-width: 30px;
+    text-align: center; /* Align numbers to the center again */
+}
+
+/* 小字单位样式 */
+.unit {
+    display: inline-block;
+    min-width: 45px;
+    text-align: left; /* Align units to the left (following centered number) */
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    margin-left: 3px; /* Add space before unit again */
+    vertical-align: baseline;
 }
 
 /* 湿度图表 */
 .chart-container {
-    height: 250px;
+    height: 230px;
     position: relative;
-    padding: 10px;
+    padding: 16px;
     background-color: white;
     border-radius: 16px;
-    margin-top: 20px;
+    margin-top: 16px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
 }
 

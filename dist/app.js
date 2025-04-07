@@ -389,32 +389,33 @@ function updateAirQualityUI(airData) {
         elements.primaryPollutant.textContent = airData.primary;
     }
     
-    // 设置健康建议
+    // 设置简洁的健康建议
     let advice = '';
-    if (airData.level === '1') {
-        advice = '空气质量令人满意，基本无空气污染，对健康没有危害。';
-    } else if (airData.level === '2') {
-        advice = '空气质量可接受，但某些污染物可能对极少数敏感人群健康有较弱影响。';
-    } else if (airData.level === '3') {
-        advice = '易感人群症状有轻度加剧，健康人群出现刺激症状。';
-    } else if (airData.level === '4') {
-        advice = '进一步加剧易感人群症状，可能对健康人群心脏、呼吸系统有影响。';
-    } else if (airData.level === '5') {
-        advice = '健康影响显著加剧，建议减少户外活动。';
-    } else if (airData.level === '6') {
-        advice = '健康危害严重，建议避免户外活动。';
+    const level = parseInt(airData.level);
+    if (level === 1) {
+        advice = '空气优，尽情活动！';
+    } else if (level === 2) {
+        advice = '空气良，适宜户外活动。';
+    } else if (level === 3) {
+        advice = '轻度污染，敏感人群减少户外。';
+    } else if (level === 4) {
+        advice = '中度污染，减少户外活动。';
+    } else if (level === 5) {
+        advice = '重度污染，避免户外活动。';
+    } else if (level === 6) {
+        advice = '严重污染，务必留在室内。';
     } else {
-        advice = '暂无健康建议';
+        advice = '暂无空气建议';
     }
     elements.healthAdvice.textContent = advice;
     
     // 更新污染物浓度
-    elements.pm2p5.textContent = `${airData.pm2p5} μg/m³`;
-    elements.pm10.textContent = `${airData.pm10} μg/m³`;
-    elements.co.textContent = `${airData.co} mg/m³`;
-    elements.no2.textContent = `${airData.no2} μg/m³`;
-    elements.so2.textContent = `${airData.so2} μg/m³`;
-    elements.o3.textContent = `${airData.o3} μg/m³`;
+    elements.pm2p5.innerHTML = `<span class=\"value-num\">${airData.pm2p5}</span><span class=\"unit\"> μg/m³</span>`;
+    elements.pm10.innerHTML = `<span class=\"value-num\">${airData.pm10}</span><span class=\"unit\"> μg/m³</span>`;
+    elements.co.innerHTML = `<span class=\"value-num\">${airData.co}</span><span class=\"unit\"> mg/m³</span>`;
+    elements.no2.innerHTML = `<span class=\"value-num\">${airData.no2}</span><span class=\"unit\"> μg/m³</span>`;
+    elements.so2.innerHTML = `<span class=\"value-num\">${airData.so2}</span><span class=\"unit\"> μg/m³</span>`;
+    elements.o3.innerHTML = `<span class=\"value-num\">${airData.o3}</span><span class=\"unit\"> μg/m³</span>`;
 }
 
 // 根据AQI设置颜色
@@ -495,7 +496,7 @@ function initHumidityChart() {
                         maxTicksLimit: 12
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: '时间'
                     }
                 }
