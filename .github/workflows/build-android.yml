@@ -24,9 +24,6 @@ jobs:
     - name: Install Android SDK
       uses: android-actions/setup-android@v2
       
-    - name: Add Android platform
-      run: npx cap add android
-      
     - name: Build Android APK
       run: |
         cd android
