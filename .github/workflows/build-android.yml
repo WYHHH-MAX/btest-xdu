@@ -13,23 +13,29 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup Node.js and Java
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm install
+        
+    - name: Initialize Android project
+      run: |
+        npx cap add android
+        npx cap sync android
         
     - name: Setup Java
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
         java-version: '17'
-        cache: 'gradle'
+        # cache: 'gradle'
         
-    - name: Install dependencies and build
+    - name: Build Android APK
       run: |
-        npm ci
-        npx cap sync android
         cd android
         ./gradlew assembleDebug --stacktrace
         cd ..
