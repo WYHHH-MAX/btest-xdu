@@ -1,5 +1,6 @@
 # btest-xdu
 西电b测 雾霾监测选题
+严禁拿这份代码去交差，别把哥们整挂科了
 
 直接静态网页接入和风天气 api 结束了。
 
@@ -12,6 +13,3 @@
   <img src="pictures/p1.jpg" alt="效果图1" width="48%">
   <img src="pictures/p2.jpg" alt="效果图2" width="48%">
 </p>
-
-
-严禁拿这份代码去交差，别把哥们整挂科了
