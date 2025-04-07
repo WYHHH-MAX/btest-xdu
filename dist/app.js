@@ -483,13 +483,16 @@ function initHumidityChart() {
                         }
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: '相对湿度 (%)'
                     }
                 },
                 x: {
                     grid: {
                         display: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 12
                     },
                     title: {
                         display: true,

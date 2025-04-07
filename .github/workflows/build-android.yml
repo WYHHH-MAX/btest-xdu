@@ -24,10 +24,10 @@ jobs:
     - name: Build web assets
       run: npm run build
         
-    - name: Initialize Android project
-      run: |
-        npx cap add android
-        npx cap sync android
+    # - name: Initialize Android project
+    #   run: |
+    #     npx cap add android
+    #     npx cap sync android
         
     - name: Setup Java
       uses: actions/setup-java@v3

@@ -454,31 +454,10 @@ h3 {
         padding: 20px;
     }
     
-    .weather-container {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .weather-icon {
-        margin-right: 0;
-        margin-bottom: 16px;
-    }
-    
-    .details-container {
-        grid-template-columns: repeat(1, 1fr);
-    }
-    
-    .aqi-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .aqi-circle {
-        margin-bottom: 16px;
-    }
-    
-    .pollutants-grid {
-        grid-template-columns: repeat(2, 1fr);
+    /* 调整图表容器在移动端的样式 */
+    .chart-container {
+        padding: 15px; /* 调整内边距 */
+        height: 220px; /* 调整高度 */
     }
 }
 
