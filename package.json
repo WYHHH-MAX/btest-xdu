@@ -1,4 +1,9 @@
 {
+  "name": "haze-detector",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir -p dist && cp -r index.html app.js styles.css dist/"
+  },
   "dependencies": {
     "@capacitor/android": "^7.2.0",
     "@capacitor/cli": "^7.2.0",
