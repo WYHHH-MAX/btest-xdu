@@ -1,5 +1,5 @@
 {
   "appId": "com.mk.hazedetector",
   "appName": "Haze Detector",
-  "webDir": "."
+  "webDir": "public"
 }
