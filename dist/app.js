@@ -6,6 +6,37 @@ const config = {
     key: 'd50b40892514481fa93637fe18814db7' // 请替换为您的实际API密钥
 };
 
+// 检查是否在Capacitor环境中运行
+const isCapacitorApp = typeof window.Capacitor !== 'undefined';
+// 如果在Capacitor环境中运行，导入所需插件
+let Geolocation;
+let Network;
+if (isCapacitorApp) {
+    // 动态导入Capacitor插件
+    try {
+        Geolocation = window.Capacitor.Plugins.Geolocation;
+        Network = window.Capacitor.Plugins.Network;
+        
+        // 检查网络状态
+        async function checkNetworkStatus() {
+            if (Network) {
+                try {
+                    const status = await Network.getStatus();
+                    if (!status.connected) {
+                        alert('网络连接不可用，请检查您的网络设置');
+                    }
+                } catch (e) {
+                    console.error('检查网络状态失败:', e);
+                }
+            }
+        }
+        // 初始检查网络状态
+        checkNetworkStatus();
+    } catch (e) {
+        console.error('Capacitor插件加载失败:', e);
+    }
+}
+
 // 缓存DOM元素
 const elements = {
     locationName: document.getElementById('location-name'),
@@ -99,6 +130,25 @@ const weatherIcons = {
     '999': 'unknown'
 };
 
+// 发送网络请求前检查网络状态
+async function safeNetworkRequest(url, options = {}) {
+    // 如果在Capacitor环境中运行，先检查网络状态
+    if (isCapacitorApp && Network) {
+        try {
+            const status = await Network.getStatus();
+            if (!status.connected) {
+                throw new Error('网络连接不可用，请检查您的网络设置');
+            }
+        } catch (e) {
+            console.error('检查网络状态失败:', e);
+            // 即使检查失败，也尝试发送请求
+        }
+    }
+    
+    // 尝试发送网络请求
+    return fetch(url, options);
+}
+
 // 初始化应用
 function initApp() {
     // 获取用户位置
@@ -112,8 +162,41 @@ function initApp() {
 }
 
 // 获取用户地理位置
-function getUserLocation() {
-    if (navigator.geolocation) {
+async function getUserLocation() {
+    // 如果在Capacitor环境中运行，使用Capacitor Geolocation插件
+    if (isCapacitorApp && Geolocation) {
+        try {
+            elements.locationName.textContent = '获取位置中...';
+            
+            // 请求位置权限
+            const permissionStatus = await Geolocation.checkPermissions();
+            if (permissionStatus.location !== 'granted') {
+                // 如果没有权限，则请求权限
+                const requestResult = await Geolocation.requestPermissions();
+                if (requestResult.location !== 'granted') {
+                    throw new Error('位置权限被拒绝');
+                }
+            }
+            
+            // 获取当前位置
+            const position = await Geolocation.getCurrentPosition({
+                enableHighAccuracy: true,
+                timeout: 10000
+            });
+            
+            const { latitude, longitude } = position.coords;
+            getLocationName(latitude, longitude);
+        } catch (error) {
+            console.error('获取位置失败:', error);
+            elements.locationName.textContent = '位置获取失败，请刷新重试';
+            // 使用默认位置（北京）
+            getWeatherData(39.92, 116.41);
+            getAirQualityData(39.92, 116.41);
+            getHourlyWeatherData(39.92, 116.41);
+        }
+    } 
+    // 如果在浏览器中运行，使用浏览器的Geolocation API
+    else if (navigator.geolocation) {
         elements.locationName.textContent = '获取位置中...';
         navigator.geolocation.getCurrentPosition(
             position => {
@@ -141,7 +224,7 @@ function getUserLocation() {
 // 获取位置名称
 async function getLocationName(latitude, longitude) {
     try {
-        const response = await fetch(`${config.weatherApiUrl.split('/v7')[0]}/geo/v2/city/lookup?location=${longitude},${latitude}&key=${config.key}`);
+        const response = await safeNetworkRequest(`${config.weatherApiUrl.split('/v7')[0]}/geo/v2/city/lookup?location=${longitude},${latitude}&key=${config.key}`);
         const data = await response.json();
         
         if (data.code === '200' && data.location && data.location.length > 0) {
@@ -208,7 +291,7 @@ async function getWeatherData(locationParam) {
             locationQuery = `location=${locationParam[1]},${locationParam[0]}`;
         }
             
-        const response = await fetch(`${config.weatherApiUrl}?${locationQuery}&key=${config.key}`);
+        const response = await safeNetworkRequest(`${config.weatherApiUrl}?${locationQuery}&key=${config.key}`);
         const data = await response.json();
         
         if (data.code === '200') {
@@ -235,7 +318,7 @@ async function getAirQualityData(locationParam) {
             locationQuery = `location=${locationParam[1]},${locationParam[0]}`;
         }
             
-        const response = await fetch(`${config.airQualityApiUrl}?${locationQuery}&key=${config.key}`);
+        const response = await safeNetworkRequest(`${config.airQualityApiUrl}?${locationQuery}&key=${config.key}`);
         const data = await response.json();
         
         if (data.code === '200') {
@@ -262,7 +345,7 @@ async function getHourlyWeatherData(locationParam) {
             locationQuery = `location=${locationParam[1]},${locationParam[0]}`;
         }
             
-        const response = await fetch(`${config.hourlyWeatherApiUrl}?${locationQuery}&key=${config.key}`);
+        const response = await safeNetworkRequest(`${config.hourlyWeatherApiUrl}?${locationQuery}&key=${config.key}`);
         const data = await response.json();
         
         if (data.code === '200' && data.hourly) {
@@ -445,17 +528,21 @@ function updateHumidityChart(hourlyData) {
 }
 
 // 刷新数据
-function refreshData() {
+async function refreshData() {
     // 添加旋转动画
     elements.refreshBtn.classList.add('rotating');
     
-    // 获取用户位置并刷新数据
-    getUserLocation();
-    
-    // 移除旋转动画
-    setTimeout(() => {
-        elements.refreshBtn.classList.remove('rotating');
-    }, 1000);
+    try {
+        // 获取用户位置并刷新数据
+        await getUserLocation();
+    } catch (error) {
+        console.error('刷新数据失败:', error);
+    } finally {
+        // 无论成功或失败，都移除旋转动画
+        setTimeout(() => {
+            elements.refreshBtn.classList.remove('rotating');
+        }, 1000);
+    }
 }
 
 // 页面加载完成后初始化应用
