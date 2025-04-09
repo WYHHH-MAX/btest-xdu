@@ -3,7 +3,7 @@ const config = {
     weatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/now',
     hourlyWeatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/24h',
     airQualityApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/air/now',
-    key: 'xxx' // 请替换为您的实际API密钥
+    key: 'd50b40892514481fa93637fe18814db7' // 请替换为您的实际API密钥
 };
 
 // 检查是否在Capacitor环境中运行
@@ -377,8 +377,47 @@ function updateWeatherUI(weatherData) {
     
     // 设置天气图标
     const iconCode = weatherData.icon;
+    let iconName = weatherIcons[iconCode];
+    
+    // 如果图标代码不在映射表中，根据天气文本内容确定图标
+    if (!iconName) {
+        const weatherText = weatherData.text.toLowerCase();
+        if (weatherText.includes('晴')) {
+            // 判断是白天还是夜晚
+            const hour = new Date().getHours();
+            if (hour >= 6 && hour < 18) {
+                iconName = 'clear-day';
+            } else {
+                iconName = 'clear-night';
+            }
+        } else if (weatherText.includes('多云')) {
+            // 判断是白天还是夜晚
+            const hour = new Date().getHours();
+            if (hour >= 6 && hour < 18) {
+                iconName = 'partly-cloudy-day';
+            } else {
+                iconName = 'partly-cloudy-night';
+            }
+        } else if (weatherText.includes('阴')) {
+            iconName = 'cloudy';
+        } else if (weatherText.includes('雨')) {
+            if (weatherText.includes('雷')) {
+                iconName = 'thunder-rain';
+            } else if (weatherText.includes('大') || weatherText.includes('暴')) {
+                iconName = 'heavy-rain';
+            } else {
+                iconName = 'rain';
+            }
+        } else if (weatherText.includes('雪')) {
+            iconName = 'snow';
+        } else if (weatherText.includes('雾') || weatherText.includes('霾')) {
+            iconName = 'fog';
+        } else {
+            iconName = 'unknown';
+        }
+    }
+    
     // 使用 Bas Milius 的填充样式天气图标
-    const iconName = weatherIcons[iconCode] || 'unknown';
     elements.weatherIcon.src = `https://cdn.jsdelivr.net/gh/basmilius/weather-icons/production/fill/all/${iconName}.svg`;
 }
 
