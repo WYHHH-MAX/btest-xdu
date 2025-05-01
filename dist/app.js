@@ -3,8 +3,8 @@ const config = {
     weatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/now',
     hourlyWeatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/24h',
     airQualityApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/air/now',
-    key: 'xxx', // 请替换为您的实际API密钥
-    requestTimeout: 3000 // 请求超时时间(毫秒)
+    key: 'd50b40892514481fa93637fe18814db7', // 请替换为您的实际API密钥
+    requestTimeout: 15000 // 请求超时时间(毫秒)
 };
 
 // 状态管理
@@ -276,7 +276,7 @@ function initApp() {
 }
 
 // 获取用户地理位置
-async function getUserLocation() {
+async function getUserLocation(retryAttempt = 0) {
     // 如果在Capacitor环境中运行，使用Capacitor Geolocation插件
     if (isCapacitorApp && Geolocation) {
         try {
@@ -294,51 +294,128 @@ async function getUserLocation() {
             // 3. Check the final permission status
             if (permissionStatus.location === 'granted') {
                 elements.locationName.textContent = '获取位置中...'; // Status update
-                // 4. Only get position if permission is granted
-                const position = await Geolocation.getCurrentPosition({
+                
+                // 创建一个带有1秒超时的Promise
+                const locationPromise = Geolocation.getCurrentPosition({
                     enableHighAccuracy: true,
                     timeout: 10000
                 });
-                const { latitude, longitude } = position.coords;
-                // Proceed to get location name and weather data
-                getLocationName(latitude, longitude);
+                
+                // 创建一个1秒后超时的Promise
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => {
+                        // 如果是首次尝试并且重试次数小于最大重试次数，则进行重试
+                        if (retryAttempt === 0) {
+                            console.log('位置获取超过1秒，正在重试...');
+                            // 不reject，而是继续等待原始请求，同时启动新的请求
+                            getUserLocation(retryAttempt + 1);
+                        } else {
+                            // 已经重试过，如果再次超时，才真正reject
+                            if (retryAttempt > 1) {
+                                reject(new Error('获取位置超时'));
+                            }
+                        }
+                    }, 1000);
+                });
+                
+                // 如果是第一次尝试，使用Promise.race
+                if (retryAttempt === 0) {
+                    // 只启动超时检测，但不终止原始请求
+                    timeoutPromise.catch(() => {});
+                    
+                    // 等待原始请求完成
+                    const position = await locationPromise;
+                    const { latitude, longitude } = position.coords;
+                    
+                    // 如果重试也在进行中，这里的结果会先返回
+                    getLocationName(latitude, longitude);
+                } else {
+                    // 如果是重试请求，直接获取位置
+                    const position = await locationPromise;
+                    const { latitude, longitude } = position.coords;
+                    getLocationName(latitude, longitude);
+                }
             } else {
                 // Permission denied
                 throw new Error('位置权限被拒绝');
             }
         } catch (error) {
-            console.error('获取位置操作失败:', error); // More specific log
-            // Determine specific error message for UI
-            if (error && error.message && error.message.includes('被拒绝')) {
-                elements.locationName.textContent = '未授予位置权限';
-            } else if (error && error.message && error.message.includes('timeout')){
-                elements.locationName.textContent = '获取位置超时';
-            } else {
-                elements.locationName.textContent = '无法获取位置';
-            }
-            // 使用默认位置（北京），但以串行方式获取数据
-            try {
-                // 先获取天气数据
-                await getWeatherData(39.92, 116.41);
-                // 再获取空气质量数据
-                await getAirQualityData(39.92, 116.41);
-                // 最后获取逐小时天气数据
-                await getHourlyWeatherData(39.92, 116.41);
-            } catch (error) {
-                console.error('串行获取数据时出错:', error);
+            console.error('获取位置操作失败:', error, '尝试次数:', retryAttempt); // More specific log
+            
+            // 只在最后一次尝试失败时才显示错误信息和使用默认位置
+            if (retryAttempt === 0 || retryAttempt > 1) {
+                // Determine specific error message for UI
+                if (error && error.message && error.message.includes('被拒绝')) {
+                    elements.locationName.textContent = '未授予位置权限';
+                } else if (error && error.message && error.message.includes('timeout')){
+                    elements.locationName.textContent = '获取位置超时';
+                } else {
+                    elements.locationName.textContent = '无法获取位置';
+                }
+                // 使用默认位置（北京），但以串行方式获取数据
+                try {
+                    // 先获取天气数据
+                    await getWeatherData(39.92, 116.41);
+                    // 再获取空气质量数据
+                    await getAirQualityData(39.92, 116.41);
+                    // 最后获取逐小时天气数据
+                    await getHourlyWeatherData(39.92, 116.41);
+                } catch (error) {
+                    console.error('串行获取数据时出错:', error);
+                }
             }
         }
     } 
     // 如果在浏览器中运行，使用浏览器的Geolocation API
     else if (navigator.geolocation) {
         elements.locationName.textContent = '获取位置中...';
-        navigator.geolocation.getCurrentPosition(
-            position => {
+        
+        const getPositionPromise = new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            });
+        });
+        
+        // 创建一个1秒后超时的Promise
+        const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => {
+                // 如果是首次尝试，则进行重试
+                if (retryAttempt === 0) {
+                    console.log('浏览器获取位置超过1秒，正在重试...');
+                    // 启动重试但不终止原始请求
+                    getUserLocation(retryAttempt + 1);
+                } else if (retryAttempt > 1) {
+                    // 已经重试多次，才真正reject
+                    reject(new Error('获取位置超时'));
+                }
+            }, 1000);
+        });
+        
+        try {
+            // 如果是第一次尝试，使用Promise.race
+            if (retryAttempt === 0) {
+                // 只启动超时检测，但不终止原始请求
+                timeoutPromise.catch(() => {});
+                
+                // 等待原始请求完成
+                const position = await getPositionPromise;
+                const { latitude, longitude } = position.coords;
+                
+                // 这个结果可能会先于重试的结果完成
+                getLocationName(latitude, longitude);
+            } else {
+                // 如果是重试请求，直接获取位置
+                const position = await getPositionPromise;
                 const { latitude, longitude } = position.coords;
                 getLocationName(latitude, longitude);
-            },
-            async error => {
-                console.error('获取位置失败:', error);
+            }
+        } catch (error) {
+            console.error('获取位置失败:', error, '尝试次数:', retryAttempt);
+            
+            // 只在最后一次尝试失败时才显示错误信息和使用默认位置
+            if (retryAttempt === 0 || retryAttempt > 1) {
                 elements.locationName.textContent = '位置获取失败，请刷新重试';
                 // 使用默认位置（北京），但以串行方式获取数据
                 try {
@@ -352,7 +429,7 @@ async function getUserLocation() {
                     console.error('串行获取数据时出错:', error);
                 }
             }
-        );
+        }
     } else {
         elements.locationName.textContent = '您的浏览器不支持地理定位';
         // 使用默认位置（北京），但以串行方式获取数据
