@@ -3,7 +3,7 @@ const config = {
     weatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/now',
     hourlyWeatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/24h',
     airQualityApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/air/now',
-    key: 'd50b40892514481fa93637fe18814db7', // 请替换为您的实际API密钥
+    key: 'xxx', // 请替换为您的实际API密钥
     requestTimeout: 3000 // 请求超时时间(毫秒)
 };
 
