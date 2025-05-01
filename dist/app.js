@@ -4,7 +4,7 @@ const config = {
     hourlyWeatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/24h',
     airQualityApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/air/now',
     key: 'd50b40892514481fa93637fe18814db7', // 请替换为您的实际API密钥
-    requestTimeout: 15000 // 请求超时时间(毫秒)
+    requestTimeout: 3000 // 请求超时时间(毫秒)
 };
 
 // 状态管理
@@ -301,7 +301,7 @@ async function getUserLocation() {
                 });
                 const { latitude, longitude } = position.coords;
                 // Proceed to get location name and weather data
-                await getLocationName(latitude, longitude);
+                getLocationName(latitude, longitude);
             } else {
                 // Permission denied
                 throw new Error('位置权限被拒绝');
@@ -312,39 +312,60 @@ async function getUserLocation() {
             if (error && error.message && error.message.includes('被拒绝')) {
                 elements.locationName.textContent = '未授予位置权限';
             } else if (error && error.message && error.message.includes('timeout')){
-                 elements.locationName.textContent = '获取位置超时';
+                elements.locationName.textContent = '获取位置超时';
             } else {
                 elements.locationName.textContent = '无法获取位置';
             }
-            // Fallback to default location - 使用对象格式传递参数
-            getWeatherData({latitude: 39.92, longitude: 116.41});
-            getAirQualityData({latitude: 39.92, longitude: 116.41});
-            getHourlyWeatherData({latitude: 39.92, longitude: 116.41});
+            // 使用默认位置（北京），但以串行方式获取数据
+            try {
+                // 先获取天气数据
+                await getWeatherData(39.92, 116.41);
+                // 再获取空气质量数据
+                await getAirQualityData(39.92, 116.41);
+                // 最后获取逐小时天气数据
+                await getHourlyWeatherData(39.92, 116.41);
+            } catch (error) {
+                console.error('串行获取数据时出错:', error);
+            }
         }
     } 
     // 如果在浏览器中运行，使用浏览器的Geolocation API
     else if (navigator.geolocation) {
         elements.locationName.textContent = '获取位置中...';
         navigator.geolocation.getCurrentPosition(
-            async position => {
+            position => {
                 const { latitude, longitude } = position.coords;
-                await getLocationName(latitude, longitude);
+                getLocationName(latitude, longitude);
             },
-            error => {
+            async error => {
                 console.error('获取位置失败:', error);
                 elements.locationName.textContent = '位置获取失败，请刷新重试';
-                // 使用默认位置（北京）- 使用对象格式传递参数
-                getWeatherData({latitude: 39.92, longitude: 116.41});
-                getAirQualityData({latitude: 39.92, longitude: 116.41});
-                getHourlyWeatherData({latitude: 39.92, longitude: 116.41});
+                // 使用默认位置（北京），但以串行方式获取数据
+                try {
+                    // 先获取天气数据
+                    await getWeatherData(39.92, 116.41);
+                    // 再获取空气质量数据
+                    await getAirQualityData(39.92, 116.41);
+                    // 最后获取逐小时天气数据
+                    await getHourlyWeatherData(39.92, 116.41);
+                } catch (error) {
+                    console.error('串行获取数据时出错:', error);
+                }
             }
         );
     } else {
         elements.locationName.textContent = '您的浏览器不支持地理定位';
-        // 使用默认位置（北京）- 使用对象格式传递参数
-        getWeatherData({latitude: 39.92, longitude: 116.41});
-        getAirQualityData({latitude: 39.92, longitude: 116.41});
-        getHourlyWeatherData({latitude: 39.92, longitude: 116.41});
+        // 使用默认位置（北京），但以串行方式获取数据
+        try {
+            // 先获取天气数据
+            await getWeatherData(39.92, 116.41);
+            // 再获取空气质量数据
+            await getAirQualityData(39.92, 116.41);
+            // 最后获取逐小时天气数据
+            await getHourlyWeatherData(39.92, 116.41);
+        } catch (error) {
+            console.error('串行获取数据时出错:', error);
+        }
     }
 }
 
@@ -378,10 +399,17 @@ async function getLocationName(latitude, longitude) {
             
             // 如果获取到了locationId，可以用它来获取天气数据
             if (location.id) {
-                // 使用location.id获取天气和空气质量数据
-                getWeatherData(location.id);
-                getAirQualityData(location.id);
-                getHourlyWeatherData(location.id);
+                // 使用location.id但按顺序串行获取各种数据
+                try {
+                    // 先获取天气数据
+                    await getWeatherData(location.id);
+                    // 再获取空气质量数据
+                    await getAirQualityData(location.id);
+                    // 最后获取逐小时天气数据
+                    await getHourlyWeatherData(location.id);
+                } catch (error) {
+                    console.error('串行获取数据时出错:', error);
+                }
                 return; // 已经使用ID获取了天气，不需要再使用经纬度
             }
             
@@ -389,18 +417,32 @@ async function getLocationName(latitude, longitude) {
             elements.locationName.textContent = '未知位置';
         }
         
-        // 如果没有得到location.id，仍然使用经纬度获取天气
-        getWeatherData(latitude, longitude);
-        getAirQualityData(latitude, longitude);
-        getHourlyWeatherData(latitude, longitude);
+        // 如果没有得到location.id，仍然使用经纬度获取天气，但按顺序串行获取
+        try {
+            // 先获取天气数据
+            await getWeatherData(latitude, longitude);
+            // 再获取空气质量数据
+            await getAirQualityData(latitude, longitude);
+            // 最后获取逐小时天气数据
+            await getHourlyWeatherData(latitude, longitude);
+        } catch (error) {
+            console.error('串行获取数据时出错:', error);
+        }
     } catch (error) {
         console.error('获取位置名称失败:', error);
         elements.locationName.textContent = '位置解析失败';
         
-        // 错误情况下也使用经纬度获取天气
-        getWeatherData(latitude, longitude);
-        getAirQualityData(latitude, longitude);
-        getHourlyWeatherData(latitude, longitude);
+        // 错误情况下也使用经纬度获取天气，但按顺序串行获取
+        try {
+            // 先获取天气数据
+            await getWeatherData(latitude, longitude);
+            // 再获取空气质量数据
+            await getAirQualityData(latitude, longitude);
+            // 最后获取逐小时天气数据
+            await getHourlyWeatherData(latitude, longitude);
+        } catch (error) {
+            console.error('串行获取数据时出错:', error);
+        }
     }
 }
 
