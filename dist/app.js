@@ -301,7 +301,7 @@ async function getUserLocation() {
                 });
                 const { latitude, longitude } = position.coords;
                 // Proceed to get location name and weather data
-                getLocationName(latitude, longitude);
+                await getLocationName(latitude, longitude);
             } else {
                 // Permission denied
                 throw new Error('位置权限被拒绝');
@@ -316,35 +316,35 @@ async function getUserLocation() {
             } else {
                 elements.locationName.textContent = '无法获取位置';
             }
-            // Fallback to default location
-            getWeatherData(39.92, 116.41);
-            getAirQualityData(39.92, 116.41);
-            getHourlyWeatherData(39.92, 116.41);
+            // Fallback to default location - 使用对象格式传递参数
+            getWeatherData({latitude: 39.92, longitude: 116.41});
+            getAirQualityData({latitude: 39.92, longitude: 116.41});
+            getHourlyWeatherData({latitude: 39.92, longitude: 116.41});
         }
     } 
     // 如果在浏览器中运行，使用浏览器的Geolocation API
     else if (navigator.geolocation) {
         elements.locationName.textContent = '获取位置中...';
         navigator.geolocation.getCurrentPosition(
-            position => {
+            async position => {
                 const { latitude, longitude } = position.coords;
-                getLocationName(latitude, longitude);
+                await getLocationName(latitude, longitude);
             },
             error => {
                 console.error('获取位置失败:', error);
                 elements.locationName.textContent = '位置获取失败，请刷新重试';
-                // 使用默认位置（北京）
-                getWeatherData(39.92, 116.41);
-                getAirQualityData(39.92, 116.41);
-                getHourlyWeatherData(39.92, 116.41);
+                // 使用默认位置（北京）- 使用对象格式传递参数
+                getWeatherData({latitude: 39.92, longitude: 116.41});
+                getAirQualityData({latitude: 39.92, longitude: 116.41});
+                getHourlyWeatherData({latitude: 39.92, longitude: 116.41});
             }
         );
     } else {
         elements.locationName.textContent = '您的浏览器不支持地理定位';
-        // 使用默认位置（北京）
-        getWeatherData(39.92, 116.41);
-        getAirQualityData(39.92, 116.41);
-        getHourlyWeatherData(39.92, 116.41);
+        // 使用默认位置（北京）- 使用对象格式传递参数
+        getWeatherData({latitude: 39.92, longitude: 116.41});
+        getAirQualityData({latitude: 39.92, longitude: 116.41});
+        getHourlyWeatherData({latitude: 39.92, longitude: 116.41});
     }
 }
 
