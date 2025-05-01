@@ -3,7 +3,16 @@ const config = {
     weatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/now',
     hourlyWeatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/24h',
     airQualityApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/air/now',
-    key: 'xxx' // 请替换为您的实际API密钥
+    key: 'd50b40892514481fa93637fe18814db7', // 请替换为您的实际API密钥
+    requestTimeout: 15000 // 请求超时时间(毫秒)
+};
+
+// 状态管理
+const appState = {
+    isNetworkAvailable: true,
+    isLoading: false,
+    lastNetworkError: null,
+    pendingRequests: []
 };
 
 // 检查是否在Capacitor环境中运行
@@ -17,24 +26,79 @@ if (isCapacitorApp) {
         Geolocation = window.Capacitor.Plugins.Geolocation;
         Network = window.Capacitor.Plugins.Network;
         
-        // 检查网络状态
-        async function checkNetworkStatus() {
-            if (Network) {
-                try {
-                    const status = await Network.getStatus();
-                    if (!status.connected) {
-                        alert('网络连接不可用，请检查您的网络设置');
-                    }
-                } catch (e) {
-                    console.error('检查网络状态失败:', e);
+        // 添加网络状态变化监听器
+        if (Network) {
+            Network.addListener('networkStatusChange', status => {
+                console.log('网络状态变化:', status);
+                appState.isNetworkAvailable = status.connected;
+                
+                // 如果网络恢复，尝试重新发送挂起的请求
+                if (status.connected && appState.pendingRequests.length > 0) {
+                    console.log('网络已恢复，重试请求');
+                    retryPendingRequests();
                 }
-            }
+            });
+            
+            // 初始检查网络状态
+            checkNetworkStatus();
         }
-        // 初始检查网络状态
-        checkNetworkStatus();
     } catch (e) {
         console.error('Capacitor插件加载失败:', e);
     }
+}
+
+// 重试所有挂起的请求
+function retryPendingRequests() {
+    const requests = [...appState.pendingRequests];
+    appState.pendingRequests = []; // 清空挂起请求列表
+    
+    requests.forEach(req => {
+        console.log('重试请求:', req.url);
+        fetch(req.url, req.options)
+            .then(req.resolve)
+            .catch(req.reject);
+    });
+}
+
+// 检查网络状态
+async function checkNetworkStatus() {
+    if (Network) {
+        try {
+            const status = await Network.getStatus();
+            appState.isNetworkAvailable = status.connected;
+            console.log('当前网络状态:', status.connected ? '已连接' : '未连接');
+            
+            if (!status.connected) {
+                showToast('网络连接不可用，请检查您的网络设置');
+            }
+            return status.connected;
+        } catch (e) {
+            console.error('检查网络状态失败:', e);
+            return false;
+        }
+    }
+    return true; // 默认假设网络可用（如在浏览器环境中）
+}
+
+// 显示简单的Toast消息
+function showToast(message, duration = 3000) {
+    // 检查是否已有toast
+    let toast = document.getElementById('network-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'network-toast';
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+    }
+    
+    // 设置消息并显示
+    toast.textContent = message;
+    toast.classList.add('show');
+    
+    // 设置自动消失
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, duration);
 }
 
 // 缓存DOM元素
@@ -132,21 +196,57 @@ const weatherIcons = {
 
 // 发送网络请求前检查网络状态
 async function safeNetworkRequest(url, options = {}) {
-    // 如果在Capacitor环境中运行，先检查网络状态
-    if (isCapacitorApp && Network) {
-        try {
-            const status = await Network.getStatus();
-            if (!status.connected) {
-                throw new Error('网络连接不可用，请检查您的网络设置');
-            }
-        } catch (e) {
-            console.error('检查网络状态失败:', e);
-            // 即使检查失败，也尝试发送请求
-        }
+    // 避免在请求进行中时重复请求
+    if (appState.isLoading) {
+        console.log('已有请求正在进行中，请稍后再试');
+        return new Promise((resolve, reject) => {
+            reject(new Error('请求已在进行中'));
+        });
     }
     
-    // 尝试发送网络请求
-    return fetch(url, options);
+    appState.isLoading = true;
+    
+    try {
+        // 检查网络状态
+        if (isCapacitorApp && Network) {
+            const status = await Network.getStatus();
+            if (!status.connected) {
+                appState.isNetworkAvailable = false;
+                throw new Error('网络连接不可用，请检查您的网络设置');
+            }
+            appState.isNetworkAvailable = true;
+        }
+        
+        // 设置请求超时
+        return new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+                appState.isLoading = false;
+                reject(new Error('请求超时'));
+            }, config.requestTimeout);
+
+            fetch(url, options)
+                .then(response => {
+                    clearTimeout(timeoutId);
+                    appState.isLoading = false;
+                    resolve(response);
+                })
+                .catch(error => {
+                    clearTimeout(timeoutId);
+                    appState.isLoading = false;
+                    
+                    // 如果是网络错误且网络连接正常，可能是临时问题，添加到待重试队列
+                    if (error.name === 'TypeError' && appState.isNetworkAvailable) {
+                        appState.pendingRequests.push({ url, options, resolve, reject });
+                        console.log('添加请求到重试队列:', url);
+                    }
+                    
+                    reject(error);
+                });
+        });
+    } catch (error) {
+        appState.isLoading = false;
+        throw error;
+    }
 }
 
 // 辅助函数：构建位置查询参数
@@ -598,4 +698,4 @@ async function refreshData() {
 }
 
 // 页面加载完成后初始化应用
-document.addEventListener('DOMContentLoaded', initApp); 
+document.addEventListener('DOMContentLoaded', initApp);

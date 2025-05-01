@@ -185,6 +185,20 @@ h3 {
     animation: rotate 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 添加刷新按钮旋转动画 */
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotating {
+    animation: rotating 1s linear infinite;
+}
+
 /* 天气信息样式 */
 .weather-container {
     display: flex;
@@ -443,6 +457,29 @@ h3 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
 }
 
+/* 添加网络状态提示的Toast样式 */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(51, 51, 51, 0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    z-index: 1000;
+    font-size: 14px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    max-width: 80%;
+    text-align: center;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
 /* 页脚样式 */
 .footer {
     text-align: center;
@@ -511,4 +548,4 @@ h3 {
 
 .aqi-hazardous {
     background: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
-} 
+}
