@@ -4,7 +4,7 @@ const config = {
     hourlyWeatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/24h',
     airQualityApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/air/now',
     geoApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/geo/v2/city/lookup',
-    key: 'd50b40892514481fa93637fe18814db7', // 请替换为您的实际API密钥
+    key: 'xxx', // API密钥
     requestTimeout: 15000, // 请求超时时间(毫秒)
     defaultLocationId: '101110102', // 西安市长安区 ID
     defaultLocationName: '长安, 西安, 陕西省, 中国' // Default display name
