@@ -180,7 +180,7 @@ async function initApp() {
             if (permStatus.location === 'granted' || permStatus.coarseLocation === 'granted') {
                 console.log('位置权限已获取，尝试获取当前位置...');
                 try {
-                    const position = await Geolocation.getCurrentPosition();
+                    const position = Geolocation.getCurrentPosition();
                     console.log('当前位置:', position.coords.latitude, position.coords.longitude);
                 } catch (posError) {
                     console.error('获取位置信息失败:', posError);
