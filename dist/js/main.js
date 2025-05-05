@@ -185,12 +185,12 @@ async function initApp() {
                     // 注意：我们只获取并打印位置信息，不在此处使用它
                 } catch (posError) {
                     console.error('获取位置信息失败:', posError);
-                    showToast('无法获取当前位置'); // 可选：显示错误提示
+                    // showToast('无法获取当前位置'); // <--- 注释掉这一行
                 }
             } else {
                 console.warn('用户未授予位置权限。');
                 // 可以选择在这里显示一条消息给用户
-                 showToast('未授予位置权限');
+                 showToast('未授予位置权限'); // <-- 保留这个，仅移除获取失败的提示
             }
         } else {
             console.log('Capacitor Geolocation 插件不可用 (可能在浏览器中运行)。');
