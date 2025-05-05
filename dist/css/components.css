@@ -1,0 +1,826 @@
+/* Style for icons in the header (like search) */
+/* Removed Header Icon Button styles */
+
+/* Removed Search Overlay Button styles */
+
+/* 刷新按钮旋转动画 */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rotating {
+    animation: rotate 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Weather Card Layout Styles */
+.weather-display-area { 
+    margin-bottom: 30px;
+    position: relative; 
+    z-index: 1; 
+    display: flex; /* Enable Flexbox */
+    align-items: center; /* Vertically center icon and text block */
+    justify-content: flex-start; /* Align items to the start */
+    gap: 20px; /* Add space between icon and text */
+    background: rgba(255, 255, 255, 0.3); /* Slightly less opaque background */
+    backdrop-filter: blur(10px); /* Reduced blur */
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.6); /* Adjusted border opacity */
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.05),
+        0 1px 1px rgba(255, 255, 255, 1.0) inset, /* Sharper top inset highlight */
+        0 -1px 1px rgba(0, 0, 0, 0.05) inset;
+    padding: 25px;
+    overflow: hidden;
+}
+
+/* 添加玻璃反光效果 - 增强 */
+.weather-display-area::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.4) 0%, /* Brighter start */
+        rgba(255, 255, 255, 0.15) 35%, /* Adjusted stop */
+        rgba(255, 255, 255, 0) 55% /* Adjusted stop */
+    );
+    transform: rotate(-20deg); /* Slightly more angle */
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 添加光泽边缘 - 增强 */
+.weather-display-area::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.95) 50%, /* Brighter edge highlight */
+        rgba(255, 255, 255, 0) 100%
+    );
+    z-index: 2;
+}
+
+.weather-icon-container { /* Container for just the icon */
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%);
+    border-radius: 50%;
+    padding: 15px;
+    display: flex; /* Center icon inside */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    z-index: 5;
+}
+
+.weather-icon {
+    margin-right: 0;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-icon img {
+    width: 70px; /* Adjust size as needed for side-by-side */
+    height: 70px;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+
+.weather-info-right { /* Container for temp/desc on the right */
+    text-align: left; /* Align text to the left */
+    position: relative;
+    z-index: 5;
+}
+
+.temperature {
+    font-size: 2.8rem; /* Adjust size if needed */
+    margin-bottom: 5px; /* Adjust spacing */
+    color: var(--primary-color);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 300; /* Added missing property */
+}
+
+.weather-description {
+    font-size: 1.1rem; /* Adjust size if needed */
+    color: var(--text-secondary);
+    font-weight: 500; /* Added missing property */
+}
+
+
+/* Details Container Grid Layout */
+.details-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Detail Item styles for grid */
+.detail-item {
+    display: flex;
+    flex-direction: column; /* Stack icon/label/value vertically */
+    align-items: center; /* Center items */
+    background: rgba(255, 255, 255, 0.7);
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    transition: var(--transition);
+    text-align: center;
+    font-size: inherit; /* Reset font size if needed */
+    color: inherit; /* Reset color if needed */
+}
+.detail-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+}
+.detail-item i {
+    color: var(--secondary-color);
+    margin-bottom: 8px; /* Space below icon */
+    margin-right: 0; /* Remove right margin */
+    font-size: 1.8rem; /* Restore icon size */
+}
+.detail-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px; /* Space below label */
+    margin-right: 0;
+}
+.detail-value {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    display: flex; /* Use flex for value+unit centering */
+    justify-content: center;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+/* 小字单位样式 */
+.unit {
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    padding-left: 0;
+    vertical-align: baseline;
+}
+
+/* 空气质量样式 */
+.aqi-summary-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px; /* Reduced bottom margin */
+}
+
+.aqi-circle {
+    min-width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #e0e0e0; /* Fallback */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: background 0.5s ease, box-shadow 0.3s ease;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.15),
+        0 1px 2px rgba(255, 255, 255, 0.5) inset, /* Inner top highlight */
+        0 -2px 3px rgba(0, 0, 0, 0.1) inset; /* Inner bottom shadow */
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.aqi-circle::after { /* Subtle gloss effect */
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -30%;
+    width: 160%;
+    height: 60%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.25) 0%, 
+        rgba(255, 255, 255, 0.05) 70%,
+        transparent 100%
+    );
+    transform: rotate(15deg);
+    z-index: 1;
+    pointer-events: none;
+}
+
+#aqi-value {
+    font-size: 2.0rem; /* Slightly larger */
+    font-weight: 700;
+    margin-bottom: 3px; /* Adjusted spacing */
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+#aqi-level {
+    font-size: 0.85rem; /* Slightly larger */
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0; /* Reset margin top */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.aqi-side-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pollutant { /* Minor style adjustments for consistency */
+    margin-bottom: 0;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.pollutant-label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-right: 8px;
+}
+
+#primary-pollutant {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Style for the concise health advice text */
+.health-advice-text { /* Minor style adjustments for consistency */
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 8px 12px;
+    background-color: rgba(241, 245, 249, 0.7);
+    border-radius: 8px;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem; /* Reduced font size */
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis if still too long */
+}
+
+/* 污染物网格 */
+.pollutants-container {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 15px 12px; /* Reduced padding */
+    border-radius: 16px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+}
+
+.pollutants-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; /* Slightly reduced gap */
+}
+
+.pollutant-item {
+    background-color: white;
+    padding: 10px 6px;
+    border-radius: 12px;
+    text-align: center;
+    transition: var(--transition);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(241, 245, 249, 0.8);
+}
+
+.pollutant-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pollutant-name {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.pollutant-value {
+    font-weight: 600;
+    font-size: 1.0rem;
+    color: var(--primary-color);
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
+    justify-content: center;
+    align-items: baseline;
+    column-gap: 3px;
+    white-space: nowrap;
+}
+
+
+/* 湿度图表 */
+.chart-container {
+    height: 230px;
+    position: relative;
+    padding: 16px;
+    background-color: white;
+    border-radius: 16px;
+    margin-top: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+/* 24小时天气预报样式 */
+.weather-forecast-container {
+    position: relative;
+    background-color: white;
+    border-radius: 16px;
+    margin-top: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    padding-top: 0; /* 移除顶部空白 */
+}
+
+.chart-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* 使iOS上的滚动更流畅 */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+    position: relative;
+    padding: 10px 0 15px 0;
+    background-color: #fff;
+}
+
+.chart-scroll-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.chart-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.forecast-chart-container {
+    min-width: 900px; /* 确保图表有足够宽度展示24小时数据 */
+    height: 180px; /* 减小高度，减少留白 */
+    padding: 5px 0 50px 0; /* 减少顶部内边距 */
+    position: relative;
+}
+
+/* 24小时天气图标相关样式 */
+.weather-icons-container {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 55px;
+    z-index: 10;
+}
+
+.weather-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    padding: 0;
+}
+
+.time-label {
+    font-size: 0.75rem;
+    color: #555;
+    margin-bottom: 4px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.hourly-weather-icon {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 3px;
+    opacity: 0.8;
+}
+
+/* 温度标签样式 */
+.temp-labels-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.temp-label {
+    position: absolute;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    text-align: center;
+    padding: 1px 4px;
+    border-radius: 4px;
+    transition: opacity 0.5s ease; /* 添加淡入淡出动画 */
+}
+
+/* 湿度标签样式 */
+.humidity-label {
+    position: absolute;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #3b82f6;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    text-align: center;
+    padding: 1px 4px;
+    border-radius: 4px;
+    transition: opacity 0.5s ease; /* 添加淡入淡出动画 */
+}
+
+/* 图例容器样式 */
+.chart-legend-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 0 auto 5px auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 6px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    max-width: fit-content;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #666;
+    padding: 3px 8px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.legend-item:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    transform: translateY(-1px);
+}
+
+.legend-item.active {
+    font-weight: 500;
+    color: #333;
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-color.humidity-legend {
+    background-color: #3b82f6;
+    border: 1px dashed #3b82f6;
+    background-clip: padding-box;
+    position: relative;
+}
+
+.legend-color.humidity-legend::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: -1px;
+    right: -1px;
+    height: 1px;
+    background-color: white;
+}
+
+.legend-text {
+    white-space: nowrap;
+}
+
+/* 浅色折线图背景 */
+.forecast-background {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(245, 247, 250, 0.3), rgba(255, 255, 255, 0.5));
+    z-index: 0;
+    pointer-events: none; /* 确保点击事件可以穿透背景 */
+    width: 100%;
+    height: calc(100% + 30px);
+    min-width: 900px; /* 与图表容器相同宽度，确保覆盖整个滚动区域 */
+    transition: background 0.6s ease;
+}
+
+/* 折线图颜色自定义 */
+.temperature-line {
+    stroke: #ffb100 !important;
+    stroke-width: 2.5px !important;
+}
+
+.humidity-line {
+    stroke: #3b82f6 !important;
+    stroke-width: 2px !important;
+    stroke-dasharray: 3, 3 !important; /* 添加虚线样式 */
+}
+
+.temperature-point {
+    background-color: #ffb100 !important;
+    border-color: #fff !important;
+}
+
+.humidity-point {
+    background-color: #3b82f6 !important;
+    border-color: #fff !important;
+}
+
+/* 卡片标题样式优化 */
+.humidity-chart-card h2 {
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+/* 图表图例样式 */
+.chart-legend {
+    padding: 2px 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* 添加网络状态提示的Toast样式 */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(51, 51, 51, 0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    z-index: 1000;
+    font-size: 14px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    max-width: 80%;
+    text-align: center;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+/* AQI颜色分级 */
+.aqi-good {
+    background: linear-gradient(135deg, var(--green-color) 0%, #34d399 100%);
+}
+
+.aqi-moderate {
+    background: linear-gradient(135deg, var(--yellow-color) 0%, #fcd34d 100%);
+}
+
+.aqi-unhealthy-sensitive {
+    background: linear-gradient(135deg, var(--orange-color) 0%, #fdba74 100%);
+}
+
+.aqi-unhealthy {
+    background: linear-gradient(135deg, var(--red-color) 0%, #f87171 100%);
+}
+
+.aqi-very-unhealthy {
+    background: linear-gradient(135deg, var(--purple-color) 0%, #a78bfa 100%);
+}
+
+.aqi-hazardous {
+    background: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+}
+
+/* Add Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.modal-close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px; /* Limit height and make scrollable */
+    overflow-y: auto;
+}
+
+#search-results-list li {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#search-results-list li:last-child {
+    border-bottom: none;
+}
+
+#search-results-list li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Restore and Fix Refresh Button Styles */
+#refresh-btn {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(91, 33, 182, 0.2);
+    position: relative;
+    z-index: 100; /* 确保按钮在最上层 */
+}
+
+#refresh-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(91, 33, 182, 0.3);
+}
+
+#refresh-btn i {
+    font-size: 1.4rem;
+    pointer-events: none; /* 防止图标影响点击事件 */
+}
+
+/* Ensure rotating animation is correctly defined */
+@keyframes rotating {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rotating {
+    animation: rotating 1s linear infinite;
+}
+
+/* Remove old search container styles */
+.search-container {
+    display: none;
+}
+
+/* AQI Gauge Styles */
+.aqi-gauge-container {
+    width: 100px; /* Keep size or adjust if needed */
+    height: 100px;
+    margin-right: 1rem; 
+}
+
+.aqi-gauge {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.gauge-track {
+    /* stroke: #e6e6e6; */ /* Old color */
+    stroke: #f3f4f6; /* Lighter, neutral grey track */
+    stroke-linecap: round; 
+}
+
+.gauge-value {
+    /* stroke-width: 12; */ /* Defined in SVG, could override here if needed */
+    stroke: #cccccc; 
+    stroke-linecap: round; 
+    transition: stroke-dashoffset 0.5s ease-out, stroke 0.5s ease-out; 
+}
+
+/* AQI Level Color Classes - Only setting arc color via CSS */
+.aqi-gauge-good .gauge-value {
+    stroke: #4caf50; /* Green */
+}
+.aqi-gauge-moderate .gauge-value {
+    stroke: #ffeb3b; /* Yellow */
+}
+.aqi-gauge-unhealthy-sensitive .gauge-value {
+    stroke: #ff9800; /* Orange */
+}
+.aqi-gauge-unhealthy .gauge-value {
+    stroke: #f44336; /* Red */
+}
+.aqi-gauge-very-unhealthy .gauge-value {
+    stroke: #9c27b0; /* Purple */
+}
+.aqi-gauge-hazardous .gauge-value {
+    stroke: #795548; /* Maroon/Brown */
+}
+
+/* Cleaned up text color rules previously set by JS or within classes */
+
+.aqi-gauge-value-text {
+    font-size: 4.0em;
+    font-weight: 700; /* 加粗字体 */
+    dominant-baseline: central;
+    transition: fill 0.5s ease-out;
+    fill: var(--aqi-text-color, #1a1a1a); /* 更深的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+    letter-spacing: -1px; /* 稍微收紧字母间距 */
+}
+
+/* 为不同AQI等级设置不同的文字颜色 */
+.aqi-gauge-good .aqi-gauge-value-text {
+    fill: #00c853; /* 绿色 */
+}
+
+.aqi-gauge-moderate .aqi-gauge-value-text {
+    fill: #ffd600; /* 黄色 */
+}
+
+.aqi-gauge-unhealthy-sensitive .aqi-gauge-value-text {
+    fill: #ff9100; /* 橙色 */
+}
+
+.aqi-gauge-unhealthy .aqi-gauge-value-text {
+    fill: #ff3d00; /* 红色 */
+}
+
+.aqi-gauge-very-unhealthy .aqi-gauge-value-text {
+    fill: #c51162; /* 深红色 */
+}
+
+.aqi-gauge-hazardous .aqi-gauge-value-text {
+    fill: #7b1fa2; /* 紫色 */
+}
+
+/* ... existing code ... */ 

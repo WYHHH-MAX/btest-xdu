@@ -1,0 +1,23 @@
+.hourly-forecast-chart-container {
+    position: relative;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: none; /* Firefox: Hide scrollbar */
+    -ms-overflow-style: none;  /* IE/Edge: Hide scrollbar */
+    padding-bottom: 0; /* Reduce space below chart container content */
+    margin-bottom: 0; /* Ensure no extra margin below */
+}
+
+.hourly-forecast-chart-container::-webkit-scrollbar {
+    display: none; /* WebKit (Chrome, Safari): Hide scrollbar */
+    height: 0;
+    width: 0;
+}
+
+#hourlyForecastChart {
+    display: block; /* Ensure canvas takes block space */
+    padding-bottom: 0; /* Remove padding below the canvas itself */
+    margin-bottom: -5px; /* Slightly pull elements below closer, adjust as needed */
+    /* min-width: 600px; */ /* Keep or adjust if chart needs horizontal space */
+    /* Consider adjusting height if necessary */
+} 

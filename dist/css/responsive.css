@@ -1,0 +1,82 @@
+/* 响应式布局样式 */
+
+/* 手机屏幕 */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .weather-display-area {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .details-container {
+        flex-direction: column;
+    }
+    
+    .detail-item {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .aqi-summary-container {
+        flex-direction: column;
+    }
+    
+    .aqi-gauge-container {
+        margin: 0 auto 20px;
+    }
+    
+    .pollutants-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 平板屏幕 */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .weather-display-area {
+        flex-direction: row;
+    }
+    
+    .details-container {
+        flex-wrap: wrap;
+    }
+    
+    .detail-item {
+        width: 48%;
+        margin-bottom: 15px;
+    }
+    
+    .pollutants-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 桌面屏幕 */
+@media screen and (min-width: 769px) {
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .weather-display-area {
+        flex-direction: row;
+    }
+    
+    .details-container {
+        justify-content: space-between;
+    }
+} 

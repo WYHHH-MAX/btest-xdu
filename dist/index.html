@@ -4,22 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天气雾霾监测</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <!-- Remove old stylesheet -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- Add new stylesheets -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>天气雾霾监测</h1>
             <p class="subtitle">实时监测您所在位置的天气和空气质量</p>
+            <!-- Removed Header Search Icon Button -->
         </div>
+
+        <!-- Removed Search Overlay -->
         
         <div class="card weather-card">
             <div class="location-container">
-                <div class="location">
-                    <i class="material-icons-round">location_on</i>
-                    <span id="location-name">正在获取位置...</span>
+                <div class="location" style="position: relative;">
+                    <button id="location-edit-search-btn" class="location-edit-search-btn">
+                        <i class="material-icons-round">search</i> <!-- Initial icon -->
+                    </button>
+                    <!-- Location text now editable -->
+                    <span id="location-name" contenteditable="false">--</span>
+                    <!-- Inline Search Results Dropdown -->
+                    <div id="inline-search-results" class="inline-search-results" style="display: none;">
+                        <ul></ul>
+                    </div>
                 </div>
                 <div class="refresh">
                     <button id="refresh-btn">
@@ -28,11 +44,16 @@
                 </div>
             </div>
             
-            <div class="weather-container">
-                <div class="weather-icon">
-                    <img id="weather-icon" src="https://cdn.jsdelivr.net/gh/basmilius/weather-icons/production/line/all/cloudy.svg" alt="天气图标">
+            <!-- Restore original layout inspired by image -->
+            <div class="weather-display-area"> <!-- Use Flexbox for side-by-side -->
+                <!-- Icon on the left -->
+                <div class="weather-icon-container"> <!-- Container for icon -->
+                    <div class="weather-icon"> 
+                         <img id="weather-icon" src="https://cdn.jsdelivr.net/gh/basmilius/weather-icons/production/fill/all/unknown.svg" alt="天气图标">
+                    </div>
                 </div>
-                <div class="weather-info">
+                <!-- Temp/Desc on the right -->
+                 <div class="weather-info-right"> <!-- Renamed from weather-info-center -->
                     <div class="temperature">
                         <span id="temperature">--</span>°C
                     </div>
@@ -41,21 +62,23 @@
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Details container remains below -->
+            <!-- Bring back details container -->
             <div class="details-container">
-                <div class="detail-item">
+                 <div class="detail-item">
                     <i class="material-icons-round">opacity</i>
-                    <div class="detail-label">湿度</div>
+                    <div class="detail-label">湿度</div> 
                     <div class="detail-value"><span id="humidity">--</span><span class="unit">%</span></div>
                 </div>
                 <div class="detail-item">
                     <i class="material-icons-round">air</i>
-                    <div class="detail-label">风向</div>
+                    <div class="detail-label">风向</div> 
                     <div class="detail-value"><span id="wind-dir">--</span></div>
                 </div>
                 <div class="detail-item">
                     <i class="material-icons-round">speed</i>
-                    <div class="detail-label">风速</div>
+                    <div class="detail-label">风速</div> 
                     <div class="detail-value"><span id="wind-speed">--</span><span class="unit"> km/h</span></div>
                 </div>
             </div>
@@ -63,14 +86,34 @@
         
         <div class="card air-quality-card">
             <h2>空气质量</h2>
-            <div class="aqi-container">
-                <div class="aqi-circle" id="aqi-circle">
-                    <span id="aqi-value">--</span>
-                    <span id="aqi-level">--</span>
+            <!-- Restructured AQI Container -->
+            <div class="aqi-summary-container">
+                <!-- Start: AQI Gauge SVG -->
+                <div class="aqi-gauge-container">
+                    <svg viewBox="0 0 120 120" class="aqi-gauge">
+                        <defs>
+                            <!-- Define reusable gradient if needed later -->
+                        </defs>
+                        <!-- Background Track -->
+                        <circle class="gauge-track" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
+                        <!-- Value Arc -->
+                        <circle class="gauge-value" id="aqi-gauge-value-arc" cx="60" cy="60" r="54" fill="none" stroke-width="12" 
+                                transform="rotate(-90 60 60)" 
+                                stroke-dasharray="339.29" 
+                                stroke-dashoffset="339.29">
+                                <!-- stroke-dasharray = 2 * PI * r = 2 * 3.14159 * 54 ≈ 339.29 -->
+                                <!-- stroke-dashoffset will be updated by JS -->
+                        </circle>
+                        <!-- Center Text -->
+                        <text class="aqi-gauge-value" id="aqi-gauge-value-text" x="60" y="60" dy="0.3em" text-anchor="middle">--</text>
+                        <!-- Removed AQI Level Text -->
+                        <!-- <text class="aqi-gauge-level" id="aqi-gauge-level-text" x="60" y="78" text-anchor="middle">--</text> -->
+                    </svg>
                 </div>
-                <div class="aqi-info">
+                <!-- End: AQI Gauge SVG -->
+                <div class="aqi-side-info">
                     <div class="pollutant">
-                        <span class="pollutant-label">首要污染物：</span>
+                        <span class="pollutant-label">首要:</span>
                         <span id="primary-pollutant">--</span>
                     </div>
                     <p id="health-advice" class="health-advice-text">--</p>
@@ -109,9 +152,13 @@
         </div>
         
         <div class="card humidity-chart-card">
-            <h2>湿度变化</h2>
-            <div class="chart-container">
-                <canvas id="humidity-chart"></canvas>
+            <h2>24小时预报</h2>
+            <div id="weather-forecast-container" class="weather-forecast-container">
+                <div class="chart-scroll-container">
+                    <div class="forecast-chart-container">
+                        <canvas id="forecast-chart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -122,6 +169,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-    <script src="app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@capacitor/core@5.5.0/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@capacitor/geolocation@5.5.0/dist/index.umd.js"></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/state.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/native.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/main.js" defer></script>
+    
+
+    <!-- Search Results Modal (Kept for displaying results) -->
+    <div id="search-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close-btn" id="modal-close-btn">&times;</span>
+            <h2>选择地点</h2>
+            <ul id="search-results-list"></ul>
+        </div>
+    </div>
 </body>
 </html> 

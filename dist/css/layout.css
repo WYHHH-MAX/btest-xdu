@@ -1,0 +1,189 @@
+/* 标题区样式 */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative; /* Keep relative for potential future elements */
+}
+
+/* Removed Header Icon Button styles */
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+/* 通用卡片样式 */
+.card {
+    background-color: var(--card-color);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+    z-index: 0;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+/* 位置和刷新按钮容器 */
+.location-container {
+    display: flex;
+    justify-content: space-between; /* Push .location and .refresh to opposite ends */
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: nowrap; /* Prevent wrapping to ensure side-by-side */
+    gap: 10px; /* Add some gap between location and refresh button if they get close */
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #555;
+    /* Remove flex-grow: 1; let it size naturally */
+    margin-right: 0; /* Remove margin */
+    gap: 8px; /* Keep gap between button and text */
+    /* Ensure it stays left */
+    justify-content: flex-start; 
+    min-width: 0; /* Allow shrinking if necessary */
+}
+
+/* Removed old location icon style */
+
+/* Styles for the inline edit/search button (now on the left) */
+.location-edit-search-btn {
+    background: none;
+    border: none;
+    color: var(--primary-light);
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.location-edit-search-btn:hover {
+    background-color: rgba(91, 33, 182, 0.1); /* Light purple background on hover */
+}
+
+.location-edit-search-btn i {
+    font-size: 1.3rem; /* Smaller icon */
+    display: block; /* Prevent extra space */
+}
+
+/* Style for the location text span */
+#location-name {
+    /* flex-grow: 1; Let the parent .location handle shrinking/growing */
+    padding: 2px 5px;
+    border-radius: 4px;
+    outline: none; /* Remove default outline when editable */
+    border: 1px solid transparent; /* Placeholder for editing border */
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if too long */
+    min-width: 50px; /* Give it a minimum width */
+}
+
+/* Styles for when the location name is being edited */
+#location-name[contenteditable="true"] {
+    border-color: var(--primary-light);
+    background-color: rgba(255, 255, 255, 0.8);
+    cursor: text;
+    white-space: normal; /* Allow wrapping during edit */
+    overflow: visible;
+}
+
+/* Styles for Inline Search Results Dropdown */
+.inline-search-results {
+    position: absolute;
+    top: calc(100% + 5px); /* Position below the location line with a small gap */
+    left: 0;
+    /* width: calc(100% + 30px); /* Removed relative width */
+    width: auto; /* Allow content to determine width */
+    min-width: 280px; /* Set a minimum width for better readability */
+    max-width: calc(100vw - 40px); /* Prevent overflow on small screens */
+    background-color: var(--card-color);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1050; /* Above other card content */
+    padding: 5px 0;
+    display: none; /* Hidden by default */
+}
+
+.inline-search-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.inline-search-results li {
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.2s ease;
+}
+
+.inline-search-results li:hover {
+    background-color: var(--background-color);
+}
+
+.inline-search-results li.no-results {
+    text-align: center;
+    color: var(--text-secondary);
+    cursor: default;
+    padding: 10px 15px;
+}
+
+/* Removed Styles for inline location edit input */
+
+/* Removed Search Overlay Styles */
+
+/* 页脚样式 */
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 30px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.footer p {
+    margin-bottom: 8px;
+}
+
+.footer p:last-child {
+    margin-bottom: 0;
+    font-weight: 500;
+} 
