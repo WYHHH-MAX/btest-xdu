@@ -1,10 +1,10 @@
 // 配置信息
 const config = {
-    weatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/now',
-    hourlyWeatherApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/weather/24h',
-    airQualityApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/v7/air/now',
-    geoApiUrl: 'https://na6pg6mtw4.re.qweatherapi.com/geo/v2/city/lookup',
-    key: 'xxx', // API密钥
+    weatherApiUrl: 'https://nn6yvx7aq4.re.qweatherapi.com/v7/weather/now',
+    hourlyWeatherApiUrl: 'https://nn6yvx7aq4.re.qweatherapi.com/v7/weather/24h',
+    airQualityApiUrl: 'https://nn6yvx7aq4.re.qweatherapi.com/v7/air/now',
+    geoApiUrl: 'https://nn6yvx7aq4.re.qweatherapi.com/geo/v2/city/lookup',
+    key: '6caa5f699ac04a7aad29afe482b1ad13', // API密钥
     requestTimeout: 15000, // 请求超时时间(毫秒)
     defaultLocationId: '101110102', // 西安市长安区 ID
     defaultLocationName: '长安, 西安, 陕西省, 中国' // Default display name
