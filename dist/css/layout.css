@@ -35,7 +35,7 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(165, 153, 209, 0.06) 0%, rgba(112, 193, 224, 0.06) 100%);
+    background: linear-gradient(135deg, rgba(248, 172, 184, 0.1) 0%, rgba(64, 195, 215, 0.1) 100%);
     z-index: 0;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .location-edit-search-btn:hover {
-    background-color: rgba(165, 153, 209, 0.12);
+    background-color: rgba(248, 172, 184, 0.15);
 }
 
 .location-edit-search-btn i {
@@ -128,8 +128,8 @@
     max-width: calc(100vw - 40px); /* Prevent overflow on small screens */
     background-color: var(--card-color);
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 5px 15px rgba(246, 134, 167, 0.1);
+    border: 1px solid rgba(248, 225, 201, 0.2);
     max-height: 200px;
     overflow-y: auto;
     z-index: 1050; /* Above other card content */
@@ -155,7 +155,7 @@
 }
 
 .inline-search-results li:hover {
-    background-color: rgba(245, 247, 250, 0.7);
+    background-color: rgba(248, 225, 201, 0.5);
 }
 
 .inline-search-results li.no-results {
@@ -176,7 +176,7 @@
     color: var(--text-secondary);
     font-size: 0.85rem;
     margin-top: 30px;
-    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(246, 134, 167, 0.1);
 }
 
 .footer p {
