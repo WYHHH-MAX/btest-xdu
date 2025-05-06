@@ -27,6 +27,8 @@
     
     .detail-item {
         padding: 12px; /* 减小内边距 */
+        background-color: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 4px 6px rgba(246, 134, 167, 0.05);
     }
     
     .aqi-summary-container {
@@ -61,6 +63,8 @@
     
     .detail-item {
         padding: 14px; /* 减小内边距 */
+        background-color: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 4px 6px rgba(246, 134, 167, 0.05);
     }
     
     .pollutants-grid {
@@ -78,6 +82,7 @@
     
     .weather-display-area {
         flex-direction: row;
+        background: rgba(255, 255, 255, 0.6);
     }
     
     .details-container {
