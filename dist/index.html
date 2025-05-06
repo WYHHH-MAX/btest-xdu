@@ -13,26 +13,24 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>天气雾霾监测</h1>
             <p class="subtitle">实时监测您所在位置的天气和空气质量</p>
-            <!-- Removed Header Search Icon Button -->
         </div>
-
-        <!-- Removed Search Overlay -->
         
         <div class="card weather-card">
+            <!-- 定位信息放在顶部 -->
             <div class="location-container">
                 <div class="location" style="position: relative;">
                     <button id="location-edit-search-btn" class="location-edit-search-btn">
-                        <i class="material-icons-round">search</i> <!-- Initial icon -->
+                        <i class="material-icons-round">search</i>
                     </button>
-                    <!-- Location text now editable -->
                     <span id="location-name" contenteditable="false">--</span>
-                    <!-- Inline Search Results Dropdown -->
                     <div id="inline-search-results" class="inline-search-results" style="display: none;">
                         <ul></ul>
                     </div>
@@ -44,16 +42,14 @@
                 </div>
             </div>
             
-            <!-- Restore original layout inspired by image -->
-            <div class="weather-display-area"> <!-- Use Flexbox for side-by-side -->
-                <!-- Icon on the left -->
-                <div class="weather-icon-container"> <!-- Container for icon -->
+            <!-- 天气图标和描述 -->
+            <div class="weather-display-area">
+                <div class="weather-icon-container">
                     <div class="weather-icon"> 
                          <img id="weather-icon" src="https://cdn.jsdelivr.net/gh/basmilius/weather-icons/production/fill/all/unknown.svg" alt="天气图标">
                     </div>
                 </div>
-                <!-- Temp/Desc on the right -->
-                 <div class="weather-info-right"> <!-- Renamed from weather-info-center -->
+                <div class="weather-info-right">
                     <div class="temperature">
                         <span id="temperature">--</span>°C
                     </div>
@@ -63,8 +59,7 @@
                 </div>
             </div>
 
-            <!-- Details container remains below -->
-            <!-- Bring back details container -->
+            <!-- 温度湿度放在下方 -->
             <div class="details-container">
                  <div class="detail-item">
                     <i class="material-icons-round">opacity</i>
@@ -86,31 +81,20 @@
         
         <div class="card air-quality-card">
             <h2>空气质量</h2>
-            <!-- Restructured AQI Container -->
             <div class="aqi-summary-container">
-                <!-- Start: AQI Gauge SVG -->
                 <div class="aqi-gauge-container">
                     <svg viewBox="0 0 120 120" class="aqi-gauge">
                         <defs>
-                            <!-- Define reusable gradient if needed later -->
                         </defs>
-                        <!-- Background Track -->
                         <circle class="gauge-track" cx="60" cy="60" r="54" fill="none" stroke-width="12"></circle>
-                        <!-- Value Arc -->
                         <circle class="gauge-value" id="aqi-gauge-value-arc" cx="60" cy="60" r="54" fill="none" stroke-width="12" 
                                 transform="rotate(-90 60 60)" 
                                 stroke-dasharray="339.29" 
                                 stroke-dashoffset="339.29">
-                                <!-- stroke-dasharray = 2 * PI * r = 2 * 3.14159 * 54 ≈ 339.29 -->
-                                <!-- stroke-dashoffset will be updated by JS -->
                         </circle>
-                        <!-- Center Text -->
                         <text class="aqi-gauge-value" id="aqi-gauge-value-text" x="60" y="60" dy="0.3em" text-anchor="middle">--</text>
-                        <!-- Removed AQI Level Text -->
-                        <!-- <text class="aqi-gauge-level" id="aqi-gauge-level-text" x="60" y="78" text-anchor="middle">--</text> -->
                     </svg>
                 </div>
-                <!-- End: AQI Gauge SVG -->
                 <div class="aqi-side-info">
                     <div class="pollutant">
                         <span class="pollutant-label">首要:</span>
@@ -178,8 +162,6 @@
     <script src="js/api.js" defer></script>
     <script src="js/main.js" defer></script>
     
-
-    <!-- Search Results Modal (Kept for displaying results) -->
     <div id="search-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close-btn" id="modal-close-btn">&times;</span>
