@@ -6,6 +6,9 @@
     -ms-overflow-style: none;  /* IE/Edge: Hide scrollbar */
     padding-bottom: 0; /* Reduce space below chart container content */
     margin-bottom: 0; /* Ensure no extra margin below */
+    background-color: rgba(244, 231, 231, 0.8); /* 添加柔和背景色 */
+    border-radius: 12px; /* 添加圆角 */
+    box-shadow: 0 2px 8px rgba(220, 239, 15, 0.858); /* 添加柔和阴影 */
 }
 
 .hourly-forecast-chart-container::-webkit-scrollbar {
