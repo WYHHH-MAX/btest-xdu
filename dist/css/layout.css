@@ -22,7 +22,7 @@
     padding: 24px;
     margin-bottom: 20px;
     transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.9);
     position: relative;
     overflow: hidden;
 }
@@ -35,7 +35,7 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(165, 153, 209, 0.06) 0%, rgba(112, 193, 224, 0.06) 100%);
     z-index: 0;
 }
 
@@ -59,7 +59,7 @@
     align-items: center;
     font-size: 1.1em;
     font-weight: 500;
-    color: #555;
+    color: var(--text-color);
     /* Remove flex-grow: 1; let it size naturally */
     margin-right: 0; /* Remove margin */
     gap: 8px; /* Keep gap between button and text */
@@ -86,7 +86,7 @@
 }
 
 .location-edit-search-btn:hover {
-    background-color: rgba(91, 33, 182, 0.1); /* Light purple background on hover */
+    background-color: rgba(165, 153, 209, 0.12);
 }
 
 .location-edit-search-btn i {
@@ -111,7 +111,7 @@
 /* Styles for when the location name is being edited */
 #location-name[contenteditable="true"] {
     border-color: var(--primary-light);
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.85);
     cursor: text;
     white-space: normal; /* Allow wrapping during edit */
     overflow: visible;
@@ -128,8 +128,8 @@
     max-width: calc(100vw - 40px); /* Prevent overflow on small screens */
     background-color: var(--card-color);
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.03);
     max-height: 200px;
     overflow-y: auto;
     z-index: 1050; /* Above other card content */
@@ -155,7 +155,7 @@
 }
 
 .inline-search-results li:hover {
-    background-color: var(--background-color);
+    background-color: rgba(245, 247, 250, 0.7);
 }
 
 .inline-search-results li.no-results {
@@ -176,7 +176,7 @@
     color: var(--text-secondary);
     font-size: 0.85rem;
     margin-top: 30px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .footer p {
