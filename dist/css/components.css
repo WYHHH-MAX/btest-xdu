@@ -23,15 +23,15 @@
     align-items: center; /* Vertically center icon and text block */
     justify-content: flex-start; /* Align items to the start */
     gap: 20px; /* Add space between icon and text */
-    background: rgba(255, 255, 255, 0.3); /* Slightly less opaque background */
-    backdrop-filter: blur(10px); /* Reduced blur */
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.4); /* 更柔和的白色背景 */
+    backdrop-filter: blur(8px); /* Reduced blur */
+    -webkit-backdrop-filter: blur(8px);
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.6); /* Adjusted border opacity */
+    border: 1px solid rgba(255, 255, 255, 0.7); /* 增加透明度 */
     box-shadow: 
-        0 10px 25px rgba(0, 0, 0, 0.05),
+        0 10px 25px rgba(0, 0, 0, 0.03), /* 减轻阴影 */
         0 1px 1px rgba(255, 255, 255, 1.0) inset, /* Sharper top inset highlight */
-        0 -1px 1px rgba(0, 0, 0, 0.05) inset;
+        0 -1px 1px rgba(0, 0, 0, 0.03) inset; /* 减轻阴影 */
     padding: 25px;
     overflow: hidden;
 }
@@ -46,8 +46,8 @@
     height: 100%;
     background: linear-gradient(
         to bottom right,
-        rgba(255, 255, 255, 0.4) 0%, /* Brighter start */
-        rgba(255, 255, 255, 0.15) 35%, /* Adjusted stop */
+        rgba(255, 255, 255, 0.5) 0%, /* 增加亮度 */
+        rgba(255, 255, 255, 0.2) 35%, /* 调整透明度 */
         rgba(255, 255, 255, 0) 55% /* Adjusted stop */
     );
     transform: rotate(-20deg); /* Slightly more angle */
@@ -66,22 +66,22 @@
     background: linear-gradient(
         to right,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.95) 50%, /* Brighter edge highlight */
+        rgba(255, 255, 255, 0.98) 50%, /* 增加亮度 */
         rgba(255, 255, 255, 0) 100%
     );
     z-index: 2;
 }
 
 .weather-icon-container { /* Container for just the icon */
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(165, 153, 209, 0.08) 0%, rgba(112, 193, 224, 0.08) 100%); /* 使用新的颜色变量 */
     border-radius: 50%;
     padding: 15px;
     display: flex; /* Center icon inside */
     align-items: center;
     justify-content: center;
     box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        0 4px 12px rgba(0, 0, 0, 0.05), /* 减轻阴影 */
+        0 0 0 1px rgba(255, 255, 255, 0.7) inset; /* 增加透明度 */
     width: 100px;
     height: 100px;
     position: relative;
@@ -102,7 +102,7 @@
 .weather-icon img {
     width: 70px; /* Adjust size as needed for side-by-side */
     height: 70px;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)); /* 减轻阴影 */
 }
 
 .weather-info-right { /* Container for temp/desc on the right */
@@ -115,7 +115,7 @@
     font-size: 2.8rem; /* Adjust size if needed */
     margin-bottom: 5px; /* Adjust spacing */
     color: var(--primary-color);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.07); /* 减轻阴影 */
     font-weight: 300; /* Added missing property */
 }
 
@@ -140,10 +140,10 @@
     display: flex;
     flex-direction: column; /* Stack icon/label/value vertically */
     align-items: center; /* Center items */
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.8); /* 增加透明度 */
     padding: 16px;
     border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01); /* 减轻阴影 */
     transition: var(--transition);
     text-align: center;
     font-size: inherit; /* Reset font size if needed */
@@ -151,7 +151,7 @@
 }
 .detail-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.03); /* 减轻阴影 */
 }
 .detail-item i {
     color: var(--secondary-color);
@@ -203,12 +203,12 @@
     color: white;
     transition: background 0.5s ease, box-shadow 0.3s ease;
     box-shadow: 
-        0 10px 20px rgba(0, 0, 0, 0.15),
-        0 1px 2px rgba(255, 255, 255, 0.5) inset, /* Inner top highlight */
-        0 -2px 3px rgba(0, 0, 0, 0.1) inset; /* Inner bottom shadow */
+        0 10px 20px rgba(0, 0, 0, 0.1), /* 减轻阴影 */
+        0 1px 2px rgba(255, 255, 255, 0.6) inset, /* 增加透明度 */
+        0 -2px 3px rgba(0, 0, 0, 0.07) inset; /* 减轻阴影 */
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 增加透明度 */
 }
 
 .aqi-circle::after { /* Subtle gloss effect */
@@ -220,8 +220,8 @@
     height: 60%;
     background: linear-gradient(
         to bottom,
-        rgba(255, 255, 255, 0.25) 0%, 
-        rgba(255, 255, 255, 0.05) 70%,
+        rgba(255, 255, 255, 0.3) 0%, /* 增加透明度 */
+        rgba(255, 255, 255, 0.08) 70%, /* 增加透明度 */
         transparent 100%
     );
     transform: rotate(15deg);
@@ -235,7 +235,7 @@
     margin-bottom: 3px; /* Adjusted spacing */
     position: relative;
     z-index: 2;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* 减轻阴影 */
 }
 
 #aqi-level {
@@ -245,7 +245,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 0; /* Reset margin top */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); /* 减轻阴影 */
 }
 
 .aqi-side-info {
@@ -257,10 +257,10 @@
 .pollutant { /* Minor style adjustments for consistency */
     margin-bottom: 0;
     padding: 8px 12px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.85); /* 增加透明度 */
     border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02); /* 减轻阴影 */
+    border: 1px solid rgba(255, 255, 255, 0.95); /* 增加透明度 */
 }
 
 .pollutant-label {
@@ -279,10 +279,10 @@
     margin-top: 0;
     margin-bottom: 0;
     padding: 8px 12px;
-    background-color: rgba(241, 245, 249, 0.7);
+    background-color: rgba(245, 247, 250, 0.75); /* 使用新的背景色变量和透明度 */
     border-radius: 8px;
     display: block;
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.85); /* 增加透明度 */
     font-size: 0.8rem; /* Reduced font size */
     white-space: nowrap; /* Prevent wrapping */
     overflow: hidden; /* Hide overflow */
@@ -291,12 +291,12 @@
 
 /* 污染物网格 */
 .pollutants-container {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6); /* 增加透明度 */
     padding: 15px 12px; /* Reduced padding */
     border-radius: 16px;
     position: relative;
     z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01); /* 减轻阴影 */
 }
 
 .pollutants-grid {
@@ -311,13 +311,13 @@
     border-radius: 12px;
     text-align: center;
     transition: var(--transition);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(241, 245, 249, 0.8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.01); /* 减轻阴影 */
+    border: 1px solid rgba(245, 247, 250, 0.85); /* 使用新的背景色变量和透明度 */
 }
 
 .pollutant-item:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.03); /* 减轻阴影 */
 }
 
 .pollutant-name {
@@ -349,7 +349,7 @@
     background-color: white;
     border-radius: 16px;
     margin-top: 16px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.01); /* 减轻阴影 */
 }
 
 /* 24小时天气预报样式 */
@@ -358,7 +358,7 @@
     background-color: white;
     border-radius: 16px;
     margin-top: 2px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.01); /* 减轻阴影 */
     overflow: hidden;
     padding-top: 0; /* 移除顶部空白 */
 }
@@ -368,7 +368,7 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; /* 使iOS上的滚动更流畅 */
     scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.07) transparent; /* 减轻阴影 */
     position: relative;
     padding: 10px 0 15px 0;
     background-color: #fff;
@@ -383,7 +383,7 @@
 }
 
 .chart-scroll-container::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.07); /* 减轻阴影 */
     border-radius: 10px;
 }
 
@@ -417,7 +417,7 @@
 
 .time-label {
     font-size: 0.75rem;
-    color: #555;
+    color: #667788; /* 更柔和的颜色 */
     margin-bottom: 4px;
     font-weight: 400;
     text-align: center;
@@ -445,7 +445,7 @@
     position: absolute;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #333;
+    color: #445566; /* 使用新的文本颜色变量 */
     transform: translateX(-50%);
     white-space: nowrap;
     text-align: center;
@@ -459,7 +459,7 @@
     position: absolute;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #3b82f6;
+    color: #70c1e0; /* 使用新的次要颜色变量 */
     transform: translateX(-50%);
     white-space: nowrap;
     text-align: center;
@@ -474,10 +474,10 @@
     justify-content: center;
     gap: 15px;
     margin: 0 auto 5px auto;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.85); /* 增加透明度 */
     padding: 6px 15px;
     border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); /* 减轻阴影 */
     max-width: fit-content;
 }
 
@@ -486,7 +486,7 @@
     align-items: center;
     gap: 6px;
     font-size: 0.85rem;
-    color: #666;
+    color: #7e8a98; /* 使用新的次要文本颜色 */
     padding: 3px 8px;
     border-radius: 15px;
     cursor: pointer;
@@ -494,15 +494,15 @@
 }
 
 .legend-item:hover {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(0, 0, 0, 0.02); /* 减轻阴影 */
     transform: translateY(-1px);
 }
 
 .legend-item.active {
     font-weight: 500;
-    color: #333;
-    background-color: rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    color: #445566; /* 使用新的文本颜色 */
+    background-color: rgba(0, 0, 0, 0.03); /* 减轻阴影 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); /* 减轻阴影 */
 }
 
 .legend-color {
@@ -513,8 +513,8 @@
 }
 
 .legend-color.humidity-legend {
-    background-color: #3b82f6;
-    border: 1px dashed #3b82f6;
+    background-color: #70c1e0; /* 使用新的次要颜色 */
+    border: 1px dashed #70c1e0; /* 使用新的次要颜色 */
     background-clip: padding-box;
     position: relative;
 }
@@ -540,7 +540,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to bottom, rgba(245, 247, 250, 0.3), rgba(255, 255, 255, 0.5));
+    background: linear-gradient(to bottom, rgba(245, 247, 250, 0.35), rgba(255, 255, 255, 0.6)); /* 使用新的背景色变量 */
     z-index: 0;
     pointer-events: none; /* 确保点击事件可以穿透背景 */
     width: 100%;
@@ -551,23 +551,23 @@
 
 /* 折线图颜色自定义 */
 .temperature-line {
-    stroke: #ffb100 !important;
+    stroke: #f0d082 !important; /* 使用新的黄色变量 */
     stroke-width: 2.5px !important;
 }
 
 .humidity-line {
-    stroke: #3b82f6 !important;
+    stroke: #70c1e0 !important; /* 使用新的次要颜色变量 */
     stroke-width: 2px !important;
     stroke-dasharray: 3, 3 !important; /* 添加虚线样式 */
 }
 
 .temperature-point {
-    background-color: #ffb100 !important;
+    background-color: #f0d082 !important; /* 使用新的黄色变量 */
     border-color: #fff !important;
 }
 
 .humidity-point {
-    background-color: #3b82f6 !important;
+    background-color: #70c1e0 !important; /* 使用新的次要颜色变量 */
     border-color: #fff !important;
 }
 
@@ -580,9 +580,9 @@
 /* 图表图例样式 */
 .chart-legend {
     padding: 2px 8px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95); /* 增加透明度 */
     border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* 减轻阴影 */
 }
 
 /* 添加网络状态提示的Toast样式 */
@@ -591,13 +591,13 @@
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(51, 51, 51, 0.9);
+    background-color: rgba(68, 85, 102, 0.85); /* 使用新的文本颜色和透明度 */
     color: white;
     padding: 12px 24px;
     border-radius: 25px;
     z-index: 1000;
     font-size: 14px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12); /* 减轻阴影 */
     opacity: 0;
     transition: opacity 0.3s ease;
     max-width: 80%;
@@ -610,27 +610,27 @@
 
 /* AQI颜色分级 */
 .aqi-good {
-    background: linear-gradient(135deg, var(--green-color) 0%, #34d399 100%);
+    background: linear-gradient(135deg, var(--green-color) 0%, #a3e2d0 100%); /* 更柔和的绿色渐变 */
 }
 
 .aqi-moderate {
-    background: linear-gradient(135deg, var(--yellow-color) 0%, #fcd34d 100%);
+    background: linear-gradient(135deg, var(--yellow-color) 0%, #f9e7b4 100%); /* 更柔和的黄色渐变 */
 }
 
 .aqi-unhealthy-sensitive {
-    background: linear-gradient(135deg, var(--orange-color) 0%, #fdba74 100%);
+    background: linear-gradient(135deg, var(--orange-color) 0%, #f7d4ad 100%); /* 更柔和的橙色渐变 */
 }
 
 .aqi-unhealthy {
-    background: linear-gradient(135deg, var(--red-color) 0%, #f87171 100%);
+    background: linear-gradient(135deg, var(--red-color) 0%, #f9cdcd 100%); /* 更柔和的红色渐变 */
 }
 
 .aqi-very-unhealthy {
-    background: linear-gradient(135deg, var(--purple-color) 0%, #a78bfa 100%);
+    background: linear-gradient(135deg, var(--purple-color) 0%, #d0c7f0 100%); /* 更柔和的紫色渐变 */
 }
 
 .aqi-hazardous {
-    background: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+    background: linear-gradient(135deg, #b0a2e3 0%, #d0c7f0 100%); /* 更柔和的深紫色渐变 */
 }
 
 /* Add Modal Styles */
@@ -643,18 +643,19 @@
     width: 100%; 
     height: 100%; 
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0,0,0,0.3); /* 减轻透明度 */
 }
 
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid rgba(136, 136, 136, 0.2); /* 减轻边框 */
     width: 80%; 
     max-width: 500px;
     border-radius: 8px;
     position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 添加柔和阴影 */
 }
 
 .modal-close-btn {
@@ -669,7 +670,7 @@
 
 .modal-close-btn:hover,
 .modal-close-btn:focus {
-    color: black;
+    color: #445566; /* 使用新的文本颜色 */
     text-decoration: none;
     cursor: pointer;
 }
@@ -684,7 +685,7 @@
 
 #search-results-list li {
     padding: 12px 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #eef2f7; /* 更柔和的边框颜色 */
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
@@ -694,7 +695,7 @@
 }
 
 #search-results-list li:hover {
-    background-color: #f0f0f0;
+    background-color: #f5f7fa; /* 使用新的背景色变量 */
 }
 
 /* Restore and Fix Refresh Button Styles */
@@ -710,14 +711,14 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(91, 33, 182, 0.2);
+    box-shadow: 0 4px 8px rgba(138, 127, 184, 0.15); /* 使用新的主要颜色变量和透明度 */
     position: relative;
     z-index: 100; /* 确保按钮在最上层 */
 }
 
 #refresh-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(91, 33, 182, 0.3);
+    box-shadow: 0 6px 12px rgba(138, 127, 184, 0.25); /* 使用新的主要颜色变量和透明度 */
 }
 
 #refresh-btn i {
@@ -755,35 +756,35 @@
 
 .gauge-track {
     /* stroke: #e6e6e6; */ /* Old color */
-    stroke: #f3f4f6; /* Lighter, neutral grey track */
+    stroke: #f0f2f5; /* 更柔和的灰色轨道 */
     stroke-linecap: round; 
 }
 
 .gauge-value {
     /* stroke-width: 12; */ /* Defined in SVG, could override here if needed */
-    stroke: #cccccc; 
+    stroke: #dddddd; /* 更柔和的颜色 */
     stroke-linecap: round; 
     transition: stroke-dashoffset 0.5s ease-out, stroke 0.5s ease-out; 
 }
 
 /* AQI Level Color Classes - Only setting arc color via CSS */
 .aqi-gauge-good .gauge-value {
-    stroke: #4caf50; /* Green */
+    stroke: #6dccb2; /* 更柔和的绿色 */
 }
 .aqi-gauge-moderate .gauge-value {
-    stroke: #ffeb3b; /* Yellow */
+    stroke: #f0d082; /* 更柔和的黄色 */
 }
 .aqi-gauge-unhealthy-sensitive .gauge-value {
-    stroke: #ff9800; /* Orange */
+    stroke: #f0b77b; /* 更柔和的橙色 */
 }
 .aqi-gauge-unhealthy .gauge-value {
-    stroke: #f44336; /* Red */
+    stroke: #f09999; /* 更柔和的红色 */
 }
 .aqi-gauge-very-unhealthy .gauge-value {
-    stroke: #9c27b0; /* Purple */
+    stroke: #b0a2e3; /* 更柔和的紫色 */
 }
 .aqi-gauge-hazardous .gauge-value {
-    stroke: #795548; /* Maroon/Brown */
+    stroke: #9f92d0; /* 更柔和的紫褐色 */
 }
 
 /* Cleaned up text color rules previously set by JS or within classes */
@@ -793,34 +794,34 @@
     font-weight: 700; /* 加粗字体 */
     dominant-baseline: central;
     transition: fill 0.5s ease-out;
-    fill: var(--aqi-text-color, #1a1a1a); /* 更深的颜色 */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+    fill: var(--aqi-text-color, #445566); /* 使用新的文本颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.07); /* 减轻阴影 */
     letter-spacing: -1px; /* 稍微收紧字母间距 */
 }
 
 /* 为不同AQI等级设置不同的文字颜色 */
 .aqi-gauge-good .aqi-gauge-value-text {
-    fill: #00c853; /* 绿色 */
+    fill: #6dccb2; /* 更柔和的绿色 */
 }
 
 .aqi-gauge-moderate .aqi-gauge-value-text {
-    fill: #ffd600; /* 黄色 */
+    fill: #f0d082; /* 更柔和的黄色 */
 }
 
 .aqi-gauge-unhealthy-sensitive .aqi-gauge-value-text {
-    fill: #ff9100; /* 橙色 */
+    fill: #f0b77b; /* 更柔和的橙色 */
 }
 
 .aqi-gauge-unhealthy .aqi-gauge-value-text {
-    fill: #ff3d00; /* 红色 */
+    fill: #f09999; /* 更柔和的红色 */
 }
 
 .aqi-gauge-very-unhealthy .aqi-gauge-value-text {
-    fill: #c51162; /* 深红色 */
+    fill: #b0a2e3; /* 更柔和的紫色 */
 }
 
 .aqi-gauge-hazardous .aqi-gauge-value-text {
-    fill: #7b1fa2; /* 紫色 */
+    fill: #9f92d0; /* 更柔和的紫色 */
 }
 
 /* ... existing code ... */ 
