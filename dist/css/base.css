@@ -1,21 +1,21 @@
 :root {
-    --primary-color: #8a7fb8; /* 更柔和的紫色 */
-    --primary-light: #a599d1; /* 浅紫色 */
-    --secondary-color: #70c1e0; /* 柔和的天蓝色 */
-    --text-color: #445566; /* 更柔和的深蓝灰色 */
-    --text-secondary: #7e8a98; /* 柔和的浅蓝灰色 */
-    --background-color: #f5f7fa; /* 更清爽的浅灰色背景 */
+    --primary-color: #f686a7; /* 粉红色作为主色 */
+    --primary-light: #f8acb8; /* 浅粉色作为浅主色 */
+    --secondary-color: #40c3d7; /* 浅蓝绿色作为次要色 */
+    --text-color: #56659e; /* 深蓝紫色作为文本色 */
+    --text-secondary: #7e8aa0; /* 稍微亮一点的文本次要色 */
+    --background-color: #f8e1c9; /* 米色/浅橙色作为背景色 */
     --card-color: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.05);
-    --green-color: #6dccb2; /* 更柔和的翠绿色 */
-    --yellow-color: #f0d082; /* 柔和的橙黄色 */
-    --orange-color: #f0b77b; /* 柔和的橙色 */
-    --red-color: #f09999; /* 柔和的红色 */
-    --purple-color: #b0a2e3; /* 柔和的深紫色 */
+    --shadow-color: rgba(246, 134, 167, 0.08);
+    --green-color: #78d1ae; /* 较柔和的绿色 */
+    --yellow-color: #f8e1c9; /* 米色/浅橙色 */
+    --orange-color: #f8c19e; /* 浅橙色 */
+    --red-color: #f8acb8; /* 浅粉色作为红色替代 */
+    --purple-color: #8f9ccc; /* 基于深蓝紫色的较浅变体 */
     --border-radius: 24px;
     --card-border-radius: 20px;
-    --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-    --box-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+    --box-shadow: 0 10px 15px -3px rgba(246, 134, 167, 0.05), 0 4px 6px -2px rgba(246, 134, 167, 0.03);
+    --box-shadow-hover: 0 20px 25px -5px rgba(246, 134, 167, 0.08), 0 10px 10px -5px rgba(246, 134, 167, 0.05);
     --transition: all 0.3s ease;
 }
 
@@ -32,7 +32,7 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     padding: 20px 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #ebeff5 100%);
+    background: linear-gradient(135deg, #f8e1c9 0%, #f8d4c0 100%); /* 暖色调背景渐变 */
 }
 
 .container {
@@ -51,7 +51,7 @@ h1 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    text-shadow: 0 2px 4px rgba(246, 134, 167, 0.05);
 }
 
 h2 {
