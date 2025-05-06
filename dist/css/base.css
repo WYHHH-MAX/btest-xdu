@@ -1,21 +1,21 @@
 :root {
-    --primary-color: #5b21b6; /* 深紫色 */
-    --primary-light: #7c3aed; /* 紫色 */
-    --secondary-color: #0ea5e9; /* 天蓝色 */
-    --text-color: #1e293b; /* 深蓝灰色 */
-    --text-secondary: #64748b; /* 浅蓝灰色 */
-    --background-color: #f1f5f9; /* 浅灰色背景 */
+    --primary-color: #8a7fb8; /* 更柔和的紫色 */
+    --primary-light: #a599d1; /* 浅紫色 */
+    --secondary-color: #70c1e0; /* 柔和的天蓝色 */
+    --text-color: #445566; /* 更柔和的深蓝灰色 */
+    --text-secondary: #7e8a98; /* 柔和的浅蓝灰色 */
+    --background-color: #f5f7fa; /* 更清爽的浅灰色背景 */
     --card-color: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.08);
-    --green-color: #10b981; /* 翠绿色 */
-    --yellow-color: #fbbf24; /* 橙黄色 */
-    --orange-color: #f59e0b; /* 橙色 */
-    --red-color: #ef4444; /* 红色 */
-    --purple-color: #8b5cf6; /* 深紫色 */
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --green-color: #6dccb2; /* 更柔和的翠绿色 */
+    --yellow-color: #f0d082; /* 柔和的橙黄色 */
+    --orange-color: #f0b77b; /* 柔和的橙色 */
+    --red-color: #f09999; /* 柔和的红色 */
+    --purple-color: #b0a2e3; /* 柔和的深紫色 */
     --border-radius: 24px;
     --card-border-radius: 20px;
-    --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-    --box-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    --box-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
     --transition: all 0.3s ease;
 }
 
@@ -32,7 +32,7 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     padding: 20px 0;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, #f5f7fa 0%, #ebeff5 100%);
 }
 
 .container {
@@ -51,7 +51,7 @@ h1 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
 h2 {
